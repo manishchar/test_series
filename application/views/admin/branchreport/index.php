@@ -77,6 +77,8 @@
                                        
                                
                                 <th width="20px">Technology</th>
+                                <th width="20px">Time</th>
+                                <th width="20px">Faculty</th>
                                 <th width="20px">Total Student</th>
                                 <th width="20px">Total Fees</th>
                                
@@ -105,6 +107,8 @@
                                             
                                             
                                             <td><?php echo ucfirst($technology); ?></td>
+                                            <td><?php echo $datalisti->starttime.' - '.$datalisti->endtime; ?></td>
+                                            <td><?php echo ucfirst($datalisti->f_name); ?></td>
                                             <td><?php echo $student->totalstudent; ?></td>
                                             <td><?php echo $student->totalfees;  ?></td>
                                             <td><?php echo $reaminfees; ?></td>

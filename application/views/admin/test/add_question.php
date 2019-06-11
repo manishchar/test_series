@@ -10,6 +10,19 @@
     line-height: 34px;
     color: #ffffff;
   }
+  
+  .label-left {
+  text-align: left;    
+    background: #aba3a3;
+    line-height: 34px;
+    color: #ffffff;
+  }
+  .label-right {
+  text-align: right;    
+    background: #aba3a3;
+    line-height: 34px;
+    color: #ffffff;
+  }
     .removeBtn{
       position: absolute;
     right: 8px;
@@ -91,7 +104,7 @@
                         <input type="hidden" name="test_id" value="<?= $test_id; ?>" >
                         <input type="hidden" name="id" value="<?= $id; ?>" >
                         <!-- <input type="text" name="question" placeholder="Enter Question" class="form-control" value="<?= $ques; ?>" > -->
-                        <textarea name="question" placeholder="Enter Question" class="form-control" rows="3"><?= $ques; ?></textarea>
+                        <textarea name="question" placeholder="Enter Question" class="form-control textarea" rows="3"><?= $ques; ?></textarea>
                       
                     </div>
 
@@ -124,19 +137,19 @@ for($i = 0; $i<$count;$i++){ ?>
 
 
                     <div class="col-sm-12 form-group">
-                      <label class="col-sm-2 label"> Response <?= ($i+1); ?><span style="color:red;">*</span></label>
-                      <label class="col-sm-2 label">
+                      <label class="col-sm-6 label-left" > Response <?= ($i+1); ?><span style="color:red;">*</span></label>
+                      <label class="col-sm-6 label-right">
                         <?php if(in_array( ($i+1),$answare_arr)){
                           $text = "checked";
                         }else{
                           $text = "";
                         } ?>
-                        <input type="checkbox" <?= $text; ?> class="answares" id="<?= ($i+1); ?>" name="ans[]" value="<?= ($i+1); ?>"> <span for="<?= $i; ?>">Is Ans</span>
+                        <input type="checkbox" <?= $text; ?> class="answares" id="<?= ($i+1); ?>" name="ans[]" value="<?= ($i+1); ?>"> <span for="<?= $i; ?>">Is Answare(Please checked)</span>
                       </label>
                         
                         <div class="col-sm-12">
                           <!-- <input type="text"  class="form-control" name="response[]" placeholder="Enter Series" value="<?= $arr[$i]; ?>"  required > -->
-                          <textarea class="form-control" name="response[]" placeholder="Enter Series" required><?= $arr[$i]; ?></textarea>
+                          <textarea class="form-control textarea" name="response[]" placeholder="Enter Series" required><?= $arr[$i]; ?></textarea>
                         </div>
                     </div>
                     <?php } ?>
@@ -424,7 +437,7 @@ var formData = new FormData(obj);
   return false;
 }
   function myform(obj){
-    if($('input[type="checkbox"]:checked').not('.mendetory').length > 0){
+    if($('input[class="answares"]:checked').not('.mendetory').length > 0){
           // alert('invalid answare');
           // $(this).attr('checked',false);
           // return false;
@@ -442,7 +455,7 @@ var formData = new FormData(obj);
   });
   $(document).on('change','.answares' ,function(){
     if($('#type').val() == '1'){
-        if($('input[type="checkbox"]:checked').not('.mendetory').length > 1){
+        if($('input[class="answares"]:checked').not('.mendetory').length > 1){
           alert('invalid answare');
           $(this).attr('checked',false);
           return false;
@@ -470,19 +483,21 @@ var formData = new FormData(obj);
   }
   function addMore(obj){
     var number = $(obj).attr('rid');
+    var newClass = "textarea"+number;
     $('#addMoreBtn').attr('rid',(parseInt(number)+1) );
     var html = '';
     html += '<div class="col-sm-12 form-group">';
-    html += '<label class="col-sm-2 label"> Response '+number+'<span style="color:red;">*</span></label>';
-    html += '<label class="col-sm-2 label"><input type="checkbox" class="answares" id="'+number+'" name="ans[]" value="'+number+'"> <label for="'+number+'">Is Ans</label></label>';
+    html += '<label class="col-sm-6 label-left"> Response '+number+'<span style="color:red;">*</span></label>';
+    html += '<label class="col-sm-6 label-right"><input type="checkbox" class="answares" id="'+number+'" name="ans[]" value="'+number+'"> <label for="'+number+'">Is Answare(Please checked)</label></label>';
     html += '<div class="col-sm-12">';
     //html += ' <input type="text"  class="form-control" name="response[]" placeholder="Enter Series" value="<?= $series; ?>"  required >';
-    html += ' <textarea type="text"  class="form-control" name="response[]" placeholder="Enter Series"  required ><?= $series; ?></textarea>';
+    html += ' <textarea type="text"  class="form-control '+newClass+'" name="response[]" placeholder="Enter Series"  required ><?= $series; ?></textarea>';
     html += ' <i onclick="removeItem(this)" class="fa fa-trash removeBtn"></i>';
     html += ' </div>';
     html += '</div>';
 
     $('#responseSection').append(html);
+     $("."+newClass).wysihtml5();
   }
   // $.ajax({
   //   url:"",

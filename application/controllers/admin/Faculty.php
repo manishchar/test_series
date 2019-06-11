@@ -120,6 +120,8 @@ class Faculty extends CI_Controller {
         else
         {
 
+// print_r($_POST);
+// die;
             $add_access    =$this->input->post('add_access');
             $edit_access    =$this->input->post('edit_access');
             $delete_access  =$this->input->post('delete_access');
@@ -200,9 +202,12 @@ foreach ($technology as $key => $value) {
 
                     if($update)
                     {
+                        //if(!empty($page_id)){
+                            $delete=$this->db->delete('permissions',array('admin_id'=>$id));
+                        //}
                          foreach($page_id as $key=>$page_val)
                         {
-                            $delete=$this->admin->delete('permissions',array('admin_id'=>$id));
+                         
                          if($no_access[$page_val]==1){$no_access1=1;}else{$no_access1=0;}
                          if($add_access[$page_val]==1){$add_access1=1;}else{$add_access1=0;}
                          if($edit_access[$page_val]==1){$edit_access1=1;}else{$edit_access1=0;}

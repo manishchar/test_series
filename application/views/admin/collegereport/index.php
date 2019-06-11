@@ -125,10 +125,16 @@
                                 {
                                     foreach ($datalist as $datalisti)
                                     {
-                                         $branch=$this->admin->getVal('SELECT name FROM branch where id='.$datalisti->branch.'');
+                                      //print_r($datalisti);
+                                      //die;
+                                         $branch=$this->db->where('id',$datalisti->branch)->get('branch')->row('name');
+                                        // print_r($branch);
+
                                           $technology=$this->admin->getVal('SELECT name FROM technology where id='.$datalisti->technology.'');
-                                          // $student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where batch_id='.$datalisti->batch_id.'');
-                                          $student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where  college  ='.$datalisti->college.' and branch ='.$datalisti->branch.'');
+                                           $student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where batch_id='.$datalisti->batch_id.'');
+                                           $student=$this->db->select("count(id) as totalstudent, sum(totalfees) as totalfees")->where(['college'=>$datalisti->college,'branch'=>$datalisti->branch])->get('student')->row();
+                                          
+
                                             $paidamount=$this->admin->getVal('SELECT sum(amount) FROM fees_payment where status = 1 and  s_id  ='.$datalisti->id.' and batch_id ='.$datalisti->batch_id.'');
                                           // $student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where id='.$datalisti->id.'');
                                            $reaminfees = $datalisti->totalfees - $paidamount;    $reaminfees;

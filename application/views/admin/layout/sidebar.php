@@ -4,9 +4,13 @@
             <li class="<?php if($this->uri->segment(2)=='dashboard'){ echo "active";} ?>" >
                 <a href="<?php echo base_url(); ?>admin/dashboard"><i class="fa fa-tachometer"></i><span>Dashboard</span><span class="pull-right-container"></span></a>
             </li>
-             
+             <?php $access = $this->session->userdata();
+             //print_r($access['permission'][3]);
+              ?>
              <?php if( $this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
-                  {
+                  { if($this->session->userdata('admin_type') == 1 || ( $access['permission'][1]['view_access'] == '1' && $access['permission'][1]['add_access'] == '1')){
+
+                  
                   ?>
              <li class="treeview <?php if($this->uri->segment(2)=='degree'){ echo "active";} ?>">
                 <a href="#">
@@ -17,12 +21,12 @@
                 </a>
                 <ul class="treeview-menu">
                 <li><a class="" href="<?php echo base_url(); ?>admin/degree/add">Add Degree</a></li>
-
-                    <li><a class="" href="<?php echo base_url(); ?>admin/degree">List Degree</a></li>
+                <li><a class="" href="<?php echo base_url(); ?>admin/degree">List Degree</a></li>
                 </ul>
             </li>
-              <?php } if( $this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
+              <?php } } if( $this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
                   {
+                    if($this->session->userdata('admin_type') == 1 || ( $access['permission'][2]['view_access'] == '1' && $access['permission'][2]['add_access'] == '1')){
                   ?>
              <li class="treeview <?php if( $this->uri->segment(2)=='branch'){ echo "active";} ?>">
                 <a href="#">
@@ -38,8 +42,9 @@
                   
                 </ul>
             </li>
-              <?php } if( $this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
+              <?php } } if( $this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
                   {
+                    if($this->session->userdata('admin_type') == 1 || ( $access['permission'][3]['view_access'] == '1' && $access['permission'][3]['add_access'] == '1')){
                   ?>
              <li class="treeview <?php if( $this->uri->segment(2)=='collagecode'){ echo "active";} ?>">
                 <a href="#">
@@ -53,8 +58,9 @@
                 <li><a href="<?php echo base_url(); ?>admin/collagecode">List College Code</a></li>
                 </ul>
             </li>
-            <?php }if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
+            <?php } } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
                   {
+                    if($this->session->userdata('admin_type') == 1 || ( $access['permission'][4]['view_access'] == '1' && $access['permission'][4]['add_access'] == '1')){
                   ?>
              <li class="treeview <?php if(  $this->uri->segment(2)=='technology'){ echo "active";} ?>">
                 <a href="#">
@@ -68,7 +74,7 @@
                  <li><a href="<?php echo base_url(); ?>admin/technology">List Technology</a></li>
                 </ul>
             </li>
-             <?php } /*if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
+             <?php } } /*if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
                   {
                   ?>
             <li class="treeview <?php if($this->uri->segment(2)=='course' ){ echo "active";} ?>">
@@ -85,6 +91,7 @@
             </li>
     <?php } */if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
                   {
+                    if($this->session->userdata('admin_type') == 1 || ( $access['permission'][6]['view_access'] == '1' && $access['permission'][6]['add_access'] == '1')){
                   ?>
              <li class="treeview <?php if($this->uri->segment(2)=='lab' ){ echo "active";} ?>">
                 <a href="#">
@@ -99,8 +106,9 @@
                 </ul>
             </li>
            
-            <?php } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
+            <?php } } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  )
                   {
+                    if($this->session->userdata('admin_type') == 1 || ( $access['permission'][8]['view_access'] == '1' && $access['permission'][8]['add_access'] == '1')){
                   ?>
              <li class="treeview <?php if($this->uri->segment(2)=='batch'){ echo "active";} ?>">
                 <a href="#">
@@ -114,8 +122,9 @@
                     <li><a href="<?php echo base_url(); ?>admin/batch">List Batch</a></li>
                 </ul>
             </li>
-            <?php } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2   || $this->session->userdata('admin_type') == 4)
+            <?php } } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2   || $this->session->userdata('admin_type') == 4)
                   {
+                    if($this->session->userdata('admin_type') == 1 || ( $access['permission'][9]['view_access'] == '1' && $access['permission'][9]['add_access'] == '1')){
                   ?>
              <li class="treeview <?php if($this->uri->segment(2)=='student' ){ echo "active";} ?>">
                 <a href="#">
@@ -130,8 +139,9 @@
                     <li><a href="<?php echo base_url(); ?>admin/student/repayment">Fees Repayment</a></li>
                 </ul>
             </li>
-             <?php } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2 )
+             <?php } } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2 )
                   {
+                    if($this->session->userdata('admin_type') == 1 || ( $access['permission'][7]['view_access'] == '1' && $access['permission'][7]['add_access'] == '1')){
                   ?>
              <li class="treeview <?php if($this->uri->segment(2)=='faculty'){ echo "active";} ?>">
                 <a href="#">
@@ -145,8 +155,9 @@
                     <li><a href="<?php echo base_url(); ?>admin/faculty">List Faculty</a></li>
                 </ul>
             </li>
-               <?php } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2 )
+               <?php } } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2 )
                   {
+                    if($this->session->userdata('admin_type') == 1 || ( $access['permission'][12]['view_access'] == '1' && $access['permission'][12]['add_access'] == '1')){
                   ?>
              <li class="treeview <?php if($this->uri->segment(2)=='finance'){ echo "active";} ?>">
                 <a href="#">
@@ -160,8 +171,9 @@
                     <li><a href="<?php echo base_url(); ?>admin/finance">List Finance</a></li>
                 </ul>
             </li>
-          <?php  } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2 )
+          <?php  } } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2 )
                   {
+                    if($this->session->userdata('admin_type') == 1 || ( $access['permission'][10]['view_access'] == '1' && $access['permission'][10]['add_access'] == '1')){
                   ?>
               <li class="treeview <?php if($this->uri->segment(2)=='teammember' ){ echo "active";} ?>">
                 <a href="#">
@@ -176,8 +188,9 @@
                   
                 </ul>
             </li>
-            <?php } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  || $this->session->userdata('admin_type') == 4)
+            <?php } } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  || $this->session->userdata('admin_type') == 4)
                   {
+                    if($this->session->userdata('admin_type') == 1 || ( $access['permission'][11]['view_access'] == '1' && $access['permission'][11]['add_access'] == '1')){
                   ?>
              <li class="treeview <?php if($this->uri->segment(2)=='collegereport' || $this->uri->segment(2)=='branchreport' || $this->uri->segment(2)=='datereport' ){ echo "active";} ?>">
                 <a href="#">
@@ -193,7 +206,7 @@
                      <li><a class="" href="<?php echo base_url(); ?>admin/dailyreport">Daily Report</a></li>                   
                 </ul>
             </li>
-          <?php  } ?>
+          <?php  } } ?>
 
              <?php
 if($this->session->userdata('admin_type') == 3){ ?>

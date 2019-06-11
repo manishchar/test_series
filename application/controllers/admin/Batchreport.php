@@ -14,7 +14,10 @@ class Batchreport extends CI_Controller {
 
     public function index()
     {
-        $data['datalist']=$this->admin->getRows('SELECT s.* FROM student s,batch b WHERE s.status = 1 and s.batch_id = b.id  GROUP BY s.batch_id');
+        $data['datalist']=$this->admin->getRows('SELECT s.*,b.starttime,b.endtime,a.name as f_name FROM student s,batch b  JOIN admin as a on b.faculty_id = a.id  WHERE s.status = 1 and s.batch_id = b.id  GROUP BY s.batch_id');
+        // echo "<pre>";
+        // print_r($data['datalist']);
+        // die;
         $data['template']='admin/branchreport/index';
         $this->load->view('admin/layout/template',$data);
     }

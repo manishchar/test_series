@@ -51,7 +51,9 @@ class Batch extends CI_Controller {
             $batch=$this->admin->getRow('select * from batch where id='.$id.'');
             $data['selectall']=$batch;
             //print_r($data['selectall']);die;
-            $data['faculty'] = $this->db->select('tab2.id,tab2.name')->join('admin as tab2','tab1.faculty_id=tab2.id')->where('tab1.technology',$batch->course_id)->get('technology_detail as tab1')->result();
+            //$data['faculty'] = $this->db->select('tab2.id,tab2.name')->join('admin as tab2','tab1.faculty_id=tab2.id')->where('tab1.technology',$batch->course_id)->get('technology_detail as tab1')->result();
+
+            $data['faculty'] = $this->db->select('tab2.name,tab2.id')->join('admin as tab2','tab1.faculty_id=tab2.id')->where('tab1.technology',$batch->course_id)->group_by('tab1.faculty_id')->get('technology_detail as tab1')->result();
             // print_r($data['faculty']);
             // die;
 

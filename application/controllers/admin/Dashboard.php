@@ -13,6 +13,8 @@ class Dashboard extends CI_Controller {
 
     public function index()
     {
+        // print_r($this->session->userdata());
+        // die;
         $data['course']=0;
         $course=$this->admin->getRows('select * from technology');
         if(!empty($course))

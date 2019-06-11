@@ -175,7 +175,7 @@ class Test extends CI_Controller {
             $admin_id = ($this->session->userdata('admin_id'));
             //$batch = $this->db->query("select c.title from batch as b INNER JOIN course as c ON c.id = b.course_id where b.id = '".$_POST['batch_id']."'")->row();
             // echo $this->db->last_query();
-            // print_r($batch);
+             // print_r($_POST);
             $question = array(
                 'test_id'=>$_POST['test_id'],
                 'question'=>$_POST['question'],
@@ -185,7 +185,7 @@ class Test extends CI_Controller {
                 'answare'=>$_POST['answares'],
             );
            // print_r( $question);
-            //die;
+           // die;
             $test_id = $_POST['test_id'];
             $qid = $_POST['id'];
             if($test_id != '' && $qid != ''){

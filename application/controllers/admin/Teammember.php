@@ -17,7 +17,7 @@ class Teammember extends CI_Controller {
     public function index()
     {
         //permission check
-        if(has_permission(4, 'view')==false){ $this->messages->add("Access denied", "alert-danger");return redirect(base_url()); }
+        if(has_permission(4, 'view')==false){ $this->messages->add("Access denied", "alert-danger");return redirect(base_url('admin/dashboard')); }
 
         $data['datalist']=$this->admin->getRows('select *  from admin where types=2');
         $data['template']='admin/teammember/index';
@@ -26,7 +26,7 @@ class Teammember extends CI_Controller {
     public function view($id)
     {
         //permission check
-        if(has_permission(4, 'view')==false){ $this->messages->add("Access denied", "alert-danger");return redirect(base_url()); }
+        if(has_permission(4, 'view')==false){ $this->messages->add("Access denied", "alert-danger");return redirect(base_url('admin/dashboard')); }
 
         $data['padedata'] = $this->config->item('padedata');
         if($id)
@@ -39,7 +39,7 @@ class Teammember extends CI_Controller {
     public function add($id=0)
     {
         //permission check
-        if(has_permission(4, 'add')==false){ $this->messages->add("Access denied", "alert-danger");return redirect(base_url()); }
+        if(has_permission(4, 'add')==false){ $this->messages->add("Access denied", "alert-danger");return redirect(base_url('admin/dashboard')); }
         $data['padedata'] = $this->config->item('padedata');
 
         if($id)
@@ -147,9 +147,10 @@ class Teammember extends CI_Controller {
                     $update = $this->admin->update('admin',array('id'=>$id), $array);
                     if($update)
                     {
+                        $delete=$this->db->delete('permissions',array('admin_id'=>$id));
                         foreach($page_id as $key=>$page_val)
                         {
-                            $delete=$this->admin->delete('permissions',array('admin_id'=>$id));
+                            
                          if($no_access[$page_val]==1){$no_access1=1;}else{$no_access1=0;}
                          if($add_access[$page_val]==1){$add_access1=1;}else{$add_access1=0;}
                          if($edit_access[$page_val]==1){$edit_access1=1;}else{$edit_access1=0;}
