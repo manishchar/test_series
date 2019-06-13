@@ -51,31 +51,26 @@ input[type=number]::-webkit-outer-spin-button {
                     </div>
                   
                   <div class="form-group">
-                    <?php
-if(!empty($selectall)){
-  $arr = explode(',', $selectall->semester);
-}
-                    ?>
                         <label>Semester<span style="color:red;">*</span></label>
                         <div class="col-sm-12">
-                         <input id="1" type="checkbox" name="semester[]" value="1" <?php if(in_array('1',$arr)){ echo "checked"; } ?>>
+                         <input id="1" type="checkbox" name="semester[]" value="1">
                          <label for="1">1 Semester</label>
-                         <input id="2" type="checkbox" name="semester[]" value="2" <?php if(in_array('2',$arr)){ echo "checked"; } ?>>
+                         <input id="2" type="checkbox" name="semester[]" value="2">
                          <label for="2">2 Semester</label>
-                         <input id="3" type="checkbox" name="semester[]" value="3" <?php if(in_array('3',$arr)){ echo "checked"; } ?>>
+                         <input id="3" type="checkbox" name="semester[]" value="3">
                          <label for="3">3 Semester</label>
-                         <input id="4" type="checkbox" name="semester[]" value="4" <?php if(in_array('4',$arr)){ echo "checked"; } ?>>
+                         <input id="4" type="checkbox" name="semester[]" value="4">
                          <label for="4">4 Semester</label>
                        </div>
                          <div class="col-sm-12">
-                         <input id="5" type="checkbox" name="semester[]" value="5" <?php if(in_array('5',$arr)){ echo "checked"; } ?>>
+                         <input id="5" type="checkbox" name="semester[]" value="5">
                          <label for="5">5 Semester</label>
-                         <input id="6" type="checkbox" name="semester[]" value="6" <?php if(in_array('6',$arr)){ echo "checked"; } ?>>
+                         <input id="6" type="checkbox" name="semester[]" value="6">
                          <label for="6">6 Semester</label>
-                          <input id="7" type="checkbox" name="semester[]" value="7" <?php if(in_array('7',$arr)){ echo "checked"; } ?>>
+                          <input id="7" type="checkbox" name="semester[]" value="7">
                          <label for="7">7 Semester</label>
 
-                          <input id="8" type="checkbox" name="semester[]" value="8" <?php if(in_array('8',$arr)){ echo "checked"; } ?>>
+                          <input id="8" type="checkbox" name="semester[]" value="8">
                          <label for="8">8 Semester</label>
                        </div>
                     </div>

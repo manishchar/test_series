@@ -71,8 +71,7 @@ class Technology extends CI_Controller {
             $array = array(
                     'name'              =>$this->input->post('name') ,
                     'topic'              =>implode(',', $topic),
-                    'status'             =>$this->input->post('status'),
-                    'IsNew'=>1
+                    'status'             =>$this->input->post('status')
                    );
 
             if($id>0)

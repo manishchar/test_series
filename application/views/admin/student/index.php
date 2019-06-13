@@ -23,12 +23,7 @@
                     <div class="panel-body">
                         <div class="btn-group">
                             <div class="buttonexport" id="buttonlist">
-                                  <?php
-                                                if(has_permission(9,'add')==true)
-                                                {
-                                                ?>
-                                <a class="btn btn-add" href="<?php echo base_url(); ?>admin/student/add"> <i class="fa fa-plus"></i> Add Student</a>
-                            <?php } ?>
+                                 
                             </div>
                         </div>
                         <div class="" id="msgdiv"><?= msg();?></div>

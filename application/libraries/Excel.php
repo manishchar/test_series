@@ -1,59 +1,106 @@
-<?php
-
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Excel {
-
-    private $excel;
-
-    public function __construct() {
-        require_once APPPATH . 'third_party/PHPExcel.php';
-        $this->excel = new PHPExcel();
-    }
-
-    public function load($path) {
-        $objReader = PHPExcel_IOFactory::createReader('Excel5');
-        $this->excel = $objReader->load($path);
-    }
-
-    public function save($path) {
-        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-        $objWriter->save($path);
-    }
-
-    public function stream($filename, $data = null) {
-        if ($data != null) {
-            $col = 'A';
-            foreach ($data[0] as $key => $val) {
-                $objRichText = new PHPExcel_RichText();
-                $objPayable = $objRichText->createTextRun(str_replace("_", " ", $key));
-                $this->excel->getActiveSheet()->getCell($col . '1')->setValue($objRichText);
-                $col++;
+	public $filename 		= 'excel-doc';
+	public $custom_titles;
+	public function make_from_db($db_results)
+        {
+            $data 		= NULL;
+            $fields 	= $db_results->list_fields();
+            if ($db_results->num_rows() == 0)
+            {
+                show_error('The table appears to have no data');
             }
-            $rowNumber = 2;
-            foreach ($data as $row) {
-                $col = 'A';
-                foreach ($row as $cell) {
-                    $this->excel->getActiveSheet()->setCellValue($col . $rowNumber, $cell);
-                    $col++;
+            else
+            {
+                $headers = $this->titles($fields);
+                foreach ($db_results->result() AS $row) 
+                {
+                    $line = '';
+                    foreach ($row AS $value)
+                    {
+                        if (!isset($value) OR $value == '')
+                        {
+                            $value = "\t";
+                        }
+                        else 
+                        {
+                            $value = str_replace('"', '""', $value);
+                            $value = '"' . $value . '"' . "\t";
+                        }
+                        $line .= $value;
+                    }
+                    $data .= trim($line) . "\n";
                 }
-                $rowNumber++;
+                $data = str_replace("\r", "", $data);
+                $this->generate($headers, $data);
             }
-        }
-        header('Content-type: application/ms-excel');
-        header("Content-Disposition: attachment; filename=" .$filename);
-        header("Cache-control: private");
-        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-        $objWriter->save("export/$filename");
-        header("location: " . base_url() . "export/$filename");
-        unlink(base_url() . "export/$filename");
-    }
-
-    public function __call($name, $arguments) {
-        if (method_exists($this->excel, $name)) {
-            return call_user_func_array(array($this->excel, $name), $arguments);
-        }
-        return null;
-    }
+	}
+	public function make_from_array($titles, $array) {
+		$data = NULL;
+		if (!is_array($array)) {
+			show_error('The data supplied is not a valid array');
+		}
+		else {
+			$headers = $this->titles($titles);
+			if (is_array($array)) {
+				foreach ($array AS $row) {
+					$line = '';
+					foreach ($row AS $value) {
+						if (!isset($value) OR $value == '') {
+							$value = "\t";
+						}
+						else {
+							$value = str_replace('"', '""', $value);
+							$value = '"' . $value . '"' . "\t";
+						}
+						$line .= $value;
+					}
+					$data .= trim($line) . "\n";
+				}
+				$data = str_replace("\r", "", $data);
+				$this->generate($headers, $data);
+			}
+		}
+	}
+	private function generate($headers, $data) {
+		$this->set_headers();
+		echo "$headers\n$data";  
+	}
+	public function titles($titles) {
+		if (is_array($titles)) {
+			$headers = array();
+			if (is_null($this->custom_titles)) {
+				if (is_array($titles)) {
+					foreach ($titles AS $title) {
+						$headers[] = $title;
+					}
+				}
+				else {
+					foreach ($titles AS $title) {
+						$headers[] = $title->name;
+					}
+				}
+			}
+			else {
+				$keys = array();
+				foreach ($titles AS $title) {
+					$keys[] = $title->name;
+				}
+				foreach ($keys AS $key) {
+					$headers[] = $this->custom_titles[array_search($key, $keys)];
+				}
+			}
+			return implode("\t", $headers);
+		}
+	}
+	private function set_headers() {
+		header("Pragma: public");
+	    header("Expires: 0");
+	    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+	    header("Content-Type: application/force-download");
+	    header("Content-Type: application/octet-stream");
+	    header("Content-Type: application/download");;
+	    header("Content-Disposition: attachment;filename=$this->filename.xls");
+	    header("Content-Transfer-Encoding: binary ");
+	}
 }

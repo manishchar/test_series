@@ -35,8 +35,6 @@ class Degree extends CI_Controller {
         {
             $data['selectall']=$this->admin->getRow('select * from degree where id='.$id.'');
         }
-        // print_r($data['selectall']);
-        // die;
         $data['form_data']=$this->session->flashdata('postdata');
         $data['template']='admin/degree/add';
         $this->load->view('admin/layout/template',$data);
@@ -68,10 +66,9 @@ class Degree extends CI_Controller {
         else
         {
             $array = array(
-                    'name'      =>$this->input->post('name') ,
-                    'semester'  =>implode(',', $this->input->post('semester')) ,
-                    'status'    =>$this->input->post('status'),          
-                    'IsNew'     =>1
+                    'name'              =>$this->input->post('name') ,
+                    'semester'              =>implode(',', $this->input->post('semester')) ,
+                    'status'             =>$this->input->post('status')
                    );
 
             if($id>0)

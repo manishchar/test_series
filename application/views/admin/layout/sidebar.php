@@ -204,6 +204,7 @@
 
                     <li><a class="" href="<?php echo base_url(); ?>admin/batchreport">Batch Report</a></li>
                      <li><a class="" href="<?php echo base_url(); ?>admin/dailyreport">Daily Report</a></li>                   
+			<li><a class="" href="<?php echo base_url(); ?>admin/feesreport">Fees Report</a></li> 
                 </ul>
             </li>
           <?php  } } ?>
@@ -234,7 +235,7 @@ if($this->session->userdata('admin_type') == 3){ ?>
     <a href="<?php echo base_url(); ?>admin/setting"><i class="fa fa-tachometer"></i><span>Setting</span><span class="pull-right-container"></span></a>
 </li>
 <?php } ?>
-<?php if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 3){ ?>
+<?php if($this->session->userdata('admin_type') == 1111 || $this->session->userdata('admin_type') == 3){ ?>
 <li class="<?php if($this->uri->segment(2)=='setting'){ echo "active";} ?>" >
     <a href="<?php echo base_url(); ?>admin/report"><i class="fa fa-tachometer"></i><span>Report</span><span class="pull-right-container"></span></a>
 </li>

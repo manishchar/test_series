@@ -63,7 +63,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                 
-                     <label>Date</label> <label  >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspTime <span style="color:red;">*</span></label>
+                     <label class="font-weight-700 font-13">Date</label> <label class="font-weight-700 font-13"  >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspTime <span style="color:red;">*</span></label>
                         <select class="browser-default form-control myform" name="batch_id" id="batch_id">
                              
                         </select>
@@ -72,7 +72,7 @@
                   </div>
                   <div class="col-md-6">
                       <div class="form-group">
-                       <label>Name<span style="color:red;">*</span></label>
+                       <label class="font-weight-700 font-13">Name<span style="color:red;">*</span></label>
                         <input type="hidden" name="id" value="<?php if(!empty($selectall)){ echo $selectall->id;}?>" >
                         <input type="text" autocomplete="off"   class="form-control myform"  name="name" id="name" placeholder="Enter  Name"  value="<?php if(!empty($selectall)){ echo $selectall->name;}elseif($form_data){ echo $form_data['name'];}?>">
                       </div>
@@ -80,7 +80,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                        
-                         <label>College<span style="color:red;">*</span></label>
+                         <label class="font-weight-700 font-13">College<span style="color:red;">*</span></label>
                         <select class="browser-default form-control myform " name="college" id="college"s>
                               <option value="">Select College</option>
                               <?php
@@ -134,7 +134,7 @@
                           </div>
                           <div class="col-md-6">
                               <div class="form-group">
-                                 <label>Semester<span style="color:red;">*</span></label>
+                                 <label class="font-weight-700 font-13">Semester<span style="color:red;">*</span></label>
                         <select class="browser-default myform form-control" name="semister" id="semister">
                              <option value="" selected="">Select Semester</option>
                             <option <?php if($form_data['semister']){if($form_data['semister']==1){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==1){ echo " selected";}  }  ?> value="1">1 st Semester</option>
@@ -151,20 +151,20 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                      
-                                 <label> Enrollment No.<span style="color:red;">*</span></label>
+                                 <label class="font-weight-700 font-13"> Enrollment No.<span style="color:red;">*</span></label>
                       <input type="text" autocomplete="off"   class="form-control myform"  id="roll_no" name="roll_no" placeholder="Enter   Enrollment No."  value="<?php if($form_data){ echo $form_data['roll_no'];}?>" >
                                 </div>
                               </div>
                               <div class="col-md-6">
                                   <div class="form-group">
                               
-                                     <label> Email<span style="color:red;">*</span></label>
+                                     <label class="font-weight-700 font-13"> Email<span style="color:red;">*</span></label>
                         <input type="email" autocomplete="off"  class="form-control myform" name="email" id="email" placeholder="Enter  Email" value="<?php if($form_data){ echo $form_data['email'];}?>"  >
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                         <label>Mobile<span style="color:red;">*</span></label>
+                                         <label class="font-weight-700 font-13">Mobile<span style="color:red;">*</span></label>
                         <input type="number" autocomplete="off"   class="form-control myform" name="mobile" id="mobile" placeholder="Enter  Mobile Number" value="<?php if($form_data){ echo $form_data['mobile'];}?>"   >
                                     </div>
                                   </div>
@@ -193,7 +193,7 @@
                       <div class="form-group">
                         <label class="font-weight-700 font-13">Test Series </label>
                         <select class="browser-default form-control" name="testseries">
-                          <option disabled selected>Select Test Series</option>
+                          <!-- <option disabled selected>Select Test Series</option> -->
                           <option value="1" <?php if($form_data['testseries']){if($form_data['testseries']==1){echo "selected";}}  ?>>Yes</option>
                            <option value="0" <?php if($form_data['testseries']){if($form_data['testseries']==0){echo "selected";}}  ?>>No</option>
                         </select>
@@ -201,7 +201,7 @@
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                      <p class="font-weight-600 font-14">* Condition: 90% attendance + 80% in Test Series + Project submission within 3 days</p>
+                      <p class="font-weight-600 font-14" style="color:red">* Condition: 90% attendance + 80% in Test Series + Project submission within 3 days</p>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -218,7 +218,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                     <label>Payment Mode<span style="color:red;">*</span></label>
+                     <label class="font-weight-700 font-13">Payment Mode<span style="color:red;">*</span></label>
                         <select class="browser-default form-control" name="payment_mode" >
                           <option  value="Cash">Cash</option>
                           <option  value="Paytm">Paytm</option>
@@ -274,7 +274,7 @@ $('.myform').css('border','1px solid #fff');
         }
 
         if(objs.status=='success'){
-          //alert('form submit');
+         // alert('form submit');
           flag = true;
         }
         console.log(result);

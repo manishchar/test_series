@@ -271,17 +271,18 @@ $batch=$this->admin->getRows('SELECT id,fees,startdate,starttime FROM batch ORDE
         $this->form_validation->set_rules('name', 'Name', 'trim|required');
 
        
-        $this->form_validation->set_rules('branch', 'Branch', 'trim|required');
+        $this->form_validation->set_rules('branch', 'Branch', 'trim');
         $this->form_validation->set_rules('semister', 'Semester', 'trim|required');
          $this->form_validation->set_rules('totalfees', 'totalfees', 'trim|required');
         if($id>0)
-        { $this->form_validation->set_rules('roll_no', 'Roll no', 'trim|required');
+        { 
+		$this->form_validation->set_rules('roll_no', 'Roll no', 'trim|required|min_length[10]|max_length[12]');
             $this->form_validation->set_rules('email', 'Email', 'trim|required');
           //  $this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|numeric|min_length[10]|max_length[12]');
         }
         else
-        { $this->form_validation->set_rules('roll_no', 'Roll no', 'trim|required|is_unique[student.roll_no]');
-            $this->form_validation->set_rules('email', 'Email', 'trim|required|is_unique[student.email]');
+        { $this->form_validation->set_rules('roll_no', 'Roll no', 'trim|required|min_length[10]|max_length[12]');
+            $this->form_validation->set_rules('email', 'Email', 'trim|required');
              //$this->form_validation->set_rules('email', 'Email', 'trim|required|is_unique[admin.email]');
             //$this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|numeric|min_length[10]|max_length[12]');
         }
@@ -359,6 +360,7 @@ $batch=$this->admin->getRows('SELECT id,fees,startdate,starttime FROM batch ORDE
                     'roll_no'              =>$this->input->post('roll_no') ,
                     'totalfees'            =>$this->input->post('totalfees') ,
                     'status'               =>$this->input->post('status'),
+		'IsNew'               =>1,
                     
                  );
             if(!empty($image))

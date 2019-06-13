@@ -64,9 +64,6 @@
   <script>
   $( function() {
     $( ".datepicker" ).datepicker();
-
-    //$( "#attendance" ).datepicker();
-
   } );
   </script>
 

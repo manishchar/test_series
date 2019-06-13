@@ -70,8 +70,7 @@ class lab extends CI_Controller {
                     'name'              =>$this->input->post('name') ,
                     'zone'           =>$this->input->post('zone') ,
                     'capacity'           =>$this->input->post('capacity') ,
-                    'status'             =>$this->input->post('status'),
-                    'IsNew'=>1
+                    'status'             =>$this->input->post('status')
                    );
 
             if($id>0)

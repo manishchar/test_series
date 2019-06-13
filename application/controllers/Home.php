@@ -211,7 +211,7 @@ class Home extends CI_Controller
         {
             $this->form_validation->set_rules('email', 'Email', 'trim|required');
             $this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|numeric|min_length[10]|max_length[12]');
-             $this->form_validation->set_rules('roll_no', 'Roll no', 'trim|required|numeric|min_length[10]|max_length[12]');
+             $this->form_validation->set_rules('roll_no', 'Roll no', 'trim|required|min_length[10]|max_length[12]');
         }
        
         $this->form_validation->set_rules('alt_mobile', 'Alt mobile', 'trim');

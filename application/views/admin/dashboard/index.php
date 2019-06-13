@@ -112,7 +112,7 @@
                     </div>
                 </a>
             </div>
-              <?php } if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  || $this->session->userdata('admin_type') == 4)
+              <?php } /* if($this->session->userdata('admin_type') == 1 || $this->session->userdata('admin_type') == 2  || $this->session->userdata('admin_type') == 4)
                   {
                   ?>
 
@@ -167,7 +167,7 @@
                     </div>
                 </a>
             </div>
-              <?php }
+              <?php } */
                   ?>
            
         </div>
