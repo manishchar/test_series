@@ -36,14 +36,14 @@ class Test extends CI_Controller {
 
     }
     public function deleteQuestion($id,$test_id){
-        $flag = $this->db->where('id',$id)->delete('question');
+        $flag = $this->db->where('id',$id)->update('question',array('IsActive'=>0));
         if($flag){
             $this->session->set_flashdata('message','Record Deleted');
         }else{
             $this->session->set_flashdata('error','Record Failed');
         }
 
-        redirect(base_url().'admin/test/view_question/'.$test_id);
+        redirect(base_url().'admin/test/question_list/'.$test_id);
 
     }
 
@@ -52,16 +52,54 @@ class Test extends CI_Controller {
         $admin_id = ($this->session->userdata('admin_id'));
         //echo $admin_id;
         $data['batches']=$this->db->query('select b.*,t.name from batch as b INNER JOIN technology as t ON t.id = b.course_id where b.faculty_id='.$admin_id)->result();
-        // echo $this->db->last_query();
-        // print_r($data['batches']);
-        // die;
+        $technology = $this->db->select('group_concat(technology) as technology')->where('faculty_id',$admin_id)->get("technology_detail")->row('technology');
+        $query ="select * from technology_detail as t join admin as a ON a.id = t.faculty_id where a.id!= ".$admin_id." and t.technology IN (".$technology.")";
+        $data['faculties'] = $this->db->query($query)->result();
         $data['tests']=$this->admin->getRows('select s.*,a.name as faculty_name from test_series as s INNER JOIN admin as a ON a.id = s.faculty_id where s.faculty_id='.$admin_id);
         $data['template']='admin/test/index';
         $this->load->view('admin/layout/template',$data);
     }
 
-    public function getdetail($aid){
+    public function copyTestSeries(){
+        $test_id = $_POST['test_id'];
+        $faculty = $_POST['faculty'];
+        $test = $this->db->where('id',$test_id)->get('test_series')->row_array();
+        // print_r($test);
+        // die;
+        unset($test['id']);
+        $test['faculty_id'] = $faculty;
+        $this->db->trans_begin();
+        $flag = $this->db->insert('test_series',$test);
+        $new_test_id = $this->db->insert_id();
+        $question = $this->db->where(['test_id'=>$test_id,'IsActive'=>1])->get('question')->result_array();
+        if(!empty($question)){
+            $final=array();
+            foreach ($question as $key => $value) {
+                unset($value['id']);
+                $value['test_id'] = $new_test_id;
+                $final[] = $value;
+            }
+        }
+        if(!empty($final)){
+            $this->db->insert_batch('question',$final);
+        }
 
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            $response = array('status'=>'failed','message'=>'copy failed');
+
+        }
+        else
+        {
+            $this->db->trans_commit();
+            $response = array('status'=>'success','message'=>'copy successfuly');
+            
+        }
+
+        echo json_encode($response);
+        die;
+       
     }
     public function detail($mid){
         $mapping    = $this->db->where('id',$mid)->get('mapping')->row();
@@ -368,7 +406,7 @@ die;
 
     public function question_list($id = null)
     {
-            $data['questions'] = $this->db->where('test_id',$id)->get('question')->result();
+        $data['questions'] = $this->db->where(['test_id'=>$id,'IsActive'=>1])->get('question')->result();
          // $data['batches'] = ($this->db->query("select b.*,c.title from batch as b left JOIN course as c ON c.id = b.course_id")->result());
         $data['template']='admin/test/view_question';
         $this->load->view('admin/layout/template',$data);

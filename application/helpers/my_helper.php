@@ -73,7 +73,7 @@ function getStudentTestSeries($sid,$batch_id)
 function getQuestionCount($test_id)
 {
     $CI =& get_instance();
-    $CI->db->where('test_id',$test_id);
+    $CI->db->where(['test_id'=>$test_id,'IsActive'=>1]);
     $query = $CI->db->get('question');
     $result =  $query->num_rows();
     return $result;

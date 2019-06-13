@@ -121,7 +121,11 @@
 <a  href="<?php echo base_url(); ?>admin/test/view_question/<?php echo $test->id; ?>" class="text text-primary" title="Question graphical View"><i class="fa fa-indent"></i>&nbsp;Graphical List</a>
 </li>
 <li>
-    <button tid="<?= $test->id; ?>" onclick="mappingPopup('<?= $test->id; ?>')" class="btn btn-info btn-sm" title="Batch Mapping" type="button"><i class="fa fa-indent"></i>Mapping</button>
+    <a tid="<?= $test->id; ?>" href="#"  onclick="mappingPopup('<?= $test->id; ?>')" class="text text-primary" title="Batch Mapping"><i class="fa fa-indent"></i>Mapping</a>
+</li>
+
+<li>
+    <a tid="<?= $test->id; ?>" href="#" onclick="copyPopup('<?= $test->id; ?>')" class="text text-primary" title="Batch Mapping"><i class="fa fa-indent"></i>Copy</a>
 </li>
 </ul>
 </div>                  
@@ -159,17 +163,58 @@
             <select class="form-control" name="batch" id="batch" required="">
                 <option value="0" selected="" disabled="">Select Betch</option>
                 <?php
-if($batches){
-    foreach ($batches as $key => $batch) { ?>
-        <option value="<?= $batch->id ?>"><?= $batch->name.'('.$batch->startdate.' : '.$batch->starttime.' - '.$batch->endtime.')' ?></option>
-    <?php }
-}
+                if($batches){
+                    foreach ($batches as $key => $batch) { ?>
+                        <option value="<?= $batch->id ?>"><?= $batch->name.'('.$batch->startdate.' : '.$batch->starttime.' - '.$batch->endtime.')' ?></option>
+                    <?php }
+                }
                 ?>
                 
             </select>
         </div>
         <div class="col-sm-12 form-group">
-            <button type="submit">Batch Mapping</button>
+            <button class="btn btn-add" type="submit">Batch Mapping</button>
+            <div id="copyErrorMessage"></div>
+        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="copy" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Copy Test Series</h4>
+      </div>
+      <div class="modal-body">
+        <form id="mappedForm" onsubmit="return copyForm(this)">
+            <input type="hidden" name="test_id" id="copy_test_id">
+        
+        <div class="col-sm-12 form-group">
+            <label>Select Faculty</label>
+            <select class="form-control" name="faculty" id="faculty" required="">
+                <option value="0" selected="" disabled="">Select Faculty</option>
+                <?php
+                if($faculties){
+                    foreach ($faculties as $key => $faculty) { ?>
+                        <option value="<?= $faculty->id ?>"><?= $faculty->name; ?></option>
+                    <?php }
+                }
+                ?>
+                
+            </select>
+        </div>
+        <div class="col-sm-12 form-group">
+            <button class="btn btn-add" type="submit">Copy</button>
         </div>
         </form>
       </div>
@@ -386,9 +431,9 @@ if($batches){
 var base_url = "<?= base_url() ?>";
 //alert(base_url);
 function uploadForm(obj){
-  //alert();
+    //alert();
 
-var formData = new FormData(obj);
+   var formData = new FormData(obj);
    $.ajax({
         type: "POST",
         url: base_url+"/admin/test/uploadData",
@@ -442,35 +487,67 @@ var formData = new FormData(obj);
         $('#test_id').val(id);
         $('#mapping').modal('show');
     }
-    function mappedForm(obj){
-        if($('#batch').val() != '' && $('#batch').val() != null){
 
+    function copyPopup(id){
+        $('#copy_test_id').val(id);
+        $('#copy').modal('show');
+    }
 
+    function copyForm(obj){
+      if($('#faculty').val() != '' && $('#faculty').val() != null){
         $.ajax({
-    type: "POST",
-    url: "<?php echo base_url().'admin/test/batchMapping'; ?>",
-    data: $(obj).serialize(),
-    // contentType: "application/json; charset=utf-8",
-    // dataType: "json",
-    async:false,
-    success: function(result){
-        console.log(result);
-        
-         var obj = JSON.parse(result);
-         if(obj.status == 'success'){
+          type: "POST",
+          url: "<?php echo base_url().'admin/test/copyTestSeries'; ?>",
+          data: $(obj).serialize(),
+          async:false,
+          success: function(result){
+          console.log(result);
+
+          var obj = JSON.parse(result);
+          if(obj.status == 'success'){
+            alert('Test Series Copy Successfully');
+            location.reload();  
+          }
+          if(obj.status == 'failed'){
+            alert('copy Failed');
+          }
+          // availableTags = obj;
+          }
+        });
+      }else{
+          alert('please select batch');
+      }
+      return false;
+    }
+    function mappedForm(obj){
+      if($('#batch').val() != '' && $('#batch').val() != null){
+        $.ajax({
+          type: "POST",
+          url: "<?php echo base_url().'admin/test/batchMapping'; ?>",
+          data: $(obj).serialize(),
+          // contentType: "application/json; charset=utf-8",
+          // dataType: "json",
+          async:false,
+          success: function(result){
+          console.log(result);
+
+          var obj = JSON.parse(result);
+          if(obj.status == 'success'){
           location.reload();  
-         }
-         if(obj.status == 'failed'){
+          }
+          if(obj.status == 'failed'){
             alert('Aleady Mapped');
-         }
-        // availableTags = obj;
+          }
+          // availableTags = obj;
+          }
+        });
+      }else{
+          alert('please select batch');
+      }
+      return false;
     }
-});
-         }else{
-            alert('please select batch');
-        }
-        return false;
-    }
+
+
 $('.remove-row').on('click', function(e) {
 var id=$(this).attr('data-id');
 if(id!='')

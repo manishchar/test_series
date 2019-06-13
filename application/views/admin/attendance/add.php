@@ -18,6 +18,7 @@ echo "string";
       dateFormat: 'yy-mm-dd',
       minDate: start_date,
       maxDate: end_date,
+      defaultDate: new Date(),
       onSelect: function(dateText) {
         //console.log("Selected date: " + dateText + "; input's current value: " + this.value);
         $('#attendanceValue').val(dateText);
@@ -67,8 +68,7 @@ echo "string";
 ?>
 <div class="col-sm-12 pull-right">
 <form id="searchForm">
-  <input type="text" placeholder="Select Date" id="attendance" name="date" required="" 
-                autocomplete="off"  value="<?= $_GET['date']; ?>">
+  <input type="text" placeholder="Select Date" id="attendance" name="date" required="" autocomplete="off"  value="<?php if(isset($_GET['date'])){ echo $_GET['date']; }else{ echo date('Y-m-d'); }  ?>">
 </form>
 </div>
 
@@ -82,12 +82,11 @@ echo "string";
 <div class="alert alert-danger"><?= $this->session->flashdata('error'); ?></div>
                    <?php } ?>
                 <!-- <form> -->
-                <input type="hidden" placeholder="Select Date" id="attendanceValue" name="date" required="" 
-                autocomplete="off" value="<?= $_GET['date']; ?>">
+<input type="hidden" placeholder="Select Date" id="attendanceValue" name="date" required="" autocomplete="off" value="<?php if(isset($_GET['date'])){ echo $_GET['date']; }else{ echo date('Y-m-d'); }  ?>">
 
                 <input type="hidden" name="batch_id" id="batch_id" value="<?= $batch_id; ?>">
                 <!-- </form> -->
-                    <div class="table-responsive">
+                    <div id="example1" class="table-responsive">
                       <table class="table">
                         <thead>
                           <tr>
@@ -131,7 +130,7 @@ if ($key % 2 != 0){
                     
                     <div class="reset-button">
                         <button class="btn btn-success w-md m-b-5" type="submit">Save</button>
-                        <a href="<?php echo base_url(); ?>admin/test"><button class="btn btn-warning w-md m-b-5" type="button">Back</button></a>
+                        <a href="<?php echo base_url(); ?>admin/attendance"><button class="btn btn-warning w-md m-b-5" type="button">Back</button></a>
                     </div>
 
                    </form>
