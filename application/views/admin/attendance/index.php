@@ -17,7 +17,7 @@
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="btn-group" id="buttonexport">
-                            <h4>Manage Batch</h4>
+                            <h4>Attendance List</h4>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -52,7 +52,7 @@
                                             <td><?php echo ($k+1); ?></td>
                                             <td><?php echo ucfirst($batch->name); ?></td>
                                             <td><?php echo date('d-M-Y',strtotime($batch->startdate)).' - '.date('d-M-Y',strtotime($batch->enddate)); ?></td>
-                                            <td><?php echo $batch->starttime.' - '.$batch->starttime; ?></td>
+                                            <td><?php echo $batch->starttime.' - '.$batch->endtime; ?></td>
                                              <!-- <td></td>
                                              <td></td> -->
                                             
