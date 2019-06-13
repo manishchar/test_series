@@ -131,13 +131,13 @@
                                         // print_r($branch);
 
                                           $technology=$this->admin->getVal('SELECT name FROM technology where id='.$datalisti->technology.'');
-                                           $student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where batch_id='.$datalisti->batch_id.'');
-                                           $student=$this->db->select("count(id) as totalstudent, sum(totalfees) as totalfees")->where(['college'=>$datalisti->college,'branch'=>$datalisti->branch])->get('student')->row();
+                                           //$student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where batch_id='.$datalisti->batch_id.'');
+                                           $student=$this->db->select("count(id) as totalstudent, sum(totalfees) as totalfees")->where(["status" => 1 ,'college'=>$datalisti->college,'branch'=>$datalisti->branch])->get('student')->row();
                                           
 
-                                            $paidamount=$this->admin->getVal('SELECT sum(amount) FROM fees_payment where status = 1 and  s_id  ='.$datalisti->id.' and batch_id ='.$datalisti->batch_id.'');
+                                            $paidamount=$this->admin->getVal('SELECT sum(amount) FROM fees_payment where status = 1 and batch_id ='.$datalisti->batch_id.' and s_id IN ('.$datalisti->sid.')');
                                           // $student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where id='.$datalisti->id.'');
-                                           $reaminfees = $datalisti->totalfees - $paidamount;    $reaminfees;
+                                           $reaminfees = $student->totalfees - $paidamount;
                                             
                                     ?>
                                         <tr data-row-id="<?php echo $datalisti->id;?>">

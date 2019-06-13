@@ -36,6 +36,7 @@
                                         <th style="display:none;">id</th>
                                         <th>Name</th>
                                         <th>Roll Number</th>
+                                        <th>Mobile</th>
                                         <th>College</th>
                                         <th>Test Status</th>
                                         <th>Total</th>
@@ -52,6 +53,7 @@
                                             <td style="display:none;"><?php echo $student->id; ?></td>
                                             <td><?php echo ucfirst($student->name); ?></td>
                                             <td><?php echo ucfirst($student->roll_no); ?></td>
+                                            <td><?php echo ucfirst($student->mobile); ?></td>
                                              <td><?php echo ucfirst($student->college_name); ?></td>
                                              <td><?php 
                                                    // echo ucfirst($student->college_name); 

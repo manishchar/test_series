@@ -16,7 +16,10 @@ class Test extends CI_Controller
             $mapping_id = $_POST['mapping_id'];
             $rollNumber = $_POST['rollNumber'];
             $batch_id = $_POST['batch_id'];
-            $student = $this->db->where(['roll_no'=>$rollNumber,'batch_id'=>$batch_id])->get('student')->row_array();
+            $con = " select * from student where ( roll_no = '".$rollNumber."' OR mobile = '".$rollNumber."' ) AND batch_id = '".$batch_id."'";
+            $student = $this->db->query($con)->row_array();
+           // $student = $this->db->where(['roll_no'=>$rollNumber,'batch_id'=>$batch_id])->get('student')->row_array();
+            //echo $this->db->last_query();
             // print_r($student);
             // die;
             if(!empty($student)){

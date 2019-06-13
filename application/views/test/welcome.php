@@ -24,10 +24,10 @@
 <div class="col-sm-4 test-center">
 	<form method="POST" >
 <div class="col-sm-12 form-group">
-	<label>Enter Your Roll Number</label>
+	<label>Enter Your Roll Number & Mobile</label>
 	<input type="hidden" name="mapping_id" value="<?= $mapping_id; ?>">
 	<input type="hidden" name="batch_id" value="<?= $batch_id; ?>">
-	<input type="text" class="form-control" name="rollNumber" placeholder="Roll Number">
+	<input type="text" class="form-control" name="rollNumber" placeholder="Roll Number & Mobile">
 	</div>
 	<div class="col-sm-12 form-group">
 	<input type="submit" class="btn btn-info" name="start" value="Start">

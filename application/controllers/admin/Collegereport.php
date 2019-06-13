@@ -15,7 +15,7 @@ class Collegereport extends CI_Controller {
     public function index()
     {
 
-        $data['datalist']=$this->admin->getRows('SELECT s.*,c.name as cname FROM student s,collagecode c WHERE s.status = 1 and s.college = c.id GROUP BY c.id,s.branch');
+        $data['datalist']=$this->admin->getRows('SELECT s.*,group_concat(s.id) as sid,c.name as cname FROM student s,collagecode c WHERE s.status = 1 and s.college = c.id GROUP BY c.id,s.branch');
 
         //$data['datalist']=$this->admin->getRows('SELECT s.*,c.name as cname FROM student s,collagecode c JOIN branch as b on s.branch = b.id WHERE s.status = 1 and s.college = c.id GROUP BY c.id,s.branch');
         // echo "<pre>";

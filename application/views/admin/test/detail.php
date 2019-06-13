@@ -1,5 +1,9 @@
 <style>
     .panel-heading .dropdown-menu-right{display:none !important;}
+    .qsList{
+            border-bottom-style: ridge;
+            margin-top: 10px;
+        }
 </style>
 <div class="content-wrapper">
     <section class="content-header">
@@ -34,7 +38,7 @@
                                 <?php
                                 if(!empty($questions))
                                 {
-                                 foreach ($questions as $question)
+                                 foreach ($questions as $k=>$question)
                                     { 
                                         if($question->type== '1'){
                                             $type = 'radio';
@@ -44,12 +48,16 @@
                                         $arr = json_decode($question->response);
                                         ?>
                                         <div class="col-sm-12 form-group">
-                                            <div class="col-sm-12" style="padding: 10px;font-weight: bolder;"><?= $question->question; ?></div>
+                                        <div class="col-sm-12" style="padding: 10px;font-weight: bolder;"><?= ($k+1).' )'.$question->question; ?></div>
                                             <?php
                                              foreach($arr as $key=>$value){ ?>
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-12 qsList">
+                                                <div class="col-sm-1">
                                                 <input type="<?= $type ?>" id="<?=  $key; ?>" name="" disabled>
-                                                <label for="<?=  $key; ?>"><?= $value; ?></label>
+                                                </div>
+                                                <div class="col-sm-11">
+                                                    <label for="<?=  $key; ?>"><?= $value; ?></label>
+                                                </div>
                                             </div>
                                             <?php } ?>
                                             

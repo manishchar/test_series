@@ -14,6 +14,10 @@
 			text-align: right;
 			padding-right: 10px;
 		}
+        .qsList{
+            border-bottom-style: ridge;
+            margin-top: 10px;
+        }
 	</style>
 </head>
 <body>
@@ -57,17 +61,21 @@ $htm .= "<div class='col-sm-1 form-group questionNumber' id = '".($key)."'>".($k
                         
                     ?>
             		<h3 class="title" style="display: none;">Keyboard</h3>
-            		<section >
+            		<section style="overflow-x: scroll !important;">
                         
-            		<p><?= $question->question ?></p>
+            		<p><?= ($key+1).' ) '.$question->question ?></p>
                     <input type="hidden" name="type[]" value="<?= $question->type ?>">
                     <?php
                         if($question->type == '1'){
                            $response = json_decode($question->response);
                            foreach ($response as $k => $res) { ?>
-                                <div>
+                                <div class="row qsList">
+                                    <div class="col-sm-1">
                                     <input type="radio" id="<?= $question->id.'_'.$k ?>" name="answare[<?= $question->id; ?>]" value="<?= ($k+1); ?>">
-                                    <label for="<?= $question->id.'_'.$k ?>"><?= $res; ?></label>
+                                    </div>
+                                    <div class="col-sm-11">
+                                        <label for="<?= $question->id.'_'.$k ?>"><?= $res; ?></label>
+                                    </div>
                                 </div> 
                            <?php }
                         }
@@ -104,11 +112,11 @@ $htm .= "<div class='col-sm-1 form-group questionNumber' id = '".($key)."'>".($k
             </form>
         </div>
 		<div class="col-sm-4">
-            <div class="container-fluid">
+            <!-- <div class="container-fluid">
                 <div class="row">
                 <?= $htm; ?>      
                 </div>
-            </div>
+            </div> -->
         </div>
 	</div>
 </div>
@@ -154,6 +162,9 @@ $htm .= "<div class='col-sm-1 form-group questionNumber' id = '".($key)."'>".($k
     left: 50%;
     top: 50%;
     width: 35px;
+}
+wizard > .content > .body {
+    overflow-x: scroll !important;
 }
 </style>
 <script type="text/javascript">
@@ -419,8 +430,8 @@ function formSubmit(obj){
     background: #eee;
     display: block;
     margin: 0.5em;
-    min-height: 15em;
-    overflow: hidden;
+    min-height: 40em;
+    overflow-x: scroll;
     position: relative;
     width: auto;
 
