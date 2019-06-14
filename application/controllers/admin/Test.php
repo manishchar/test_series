@@ -107,7 +107,7 @@ class Test extends CI_Controller {
         $test_id    = $mapping->test_id;
         $data['mapping_id']=$mapping->id;
         $data['tests']=array();
-        $data['students']=$this->db->select('s.* , c.name as college_name')->join('collagecode as c','c.id =s.college')->where('s.batch_id',$bid)->get('student as s')->result();
+        $data['students']=$this->db->select('s.* , c.name as college_name')->join('collagecode as c','c.id =s.college')->where('s.batch_id',$bid)->where('s.IsDeleted',0)->get('student as s')->result();
         $data['template']='admin/test/student_detail';
         $this->load->view('admin/layout/template',$data);
    
@@ -185,7 +185,7 @@ class Test extends CI_Controller {
         $data['batches'] = ($this->db->query("select b.*,c.title from batch as b left JOIN course as c ON c.id = b.course_id where b.faculty_id= ".$admin_id)->result());
         //echo $admin_id;
 
-        $data['technologies'] = $this->db->select('tab1.*')->join('technology as tab1','tab1.id= tab2.technology')->where('tab2.faculty_id',$admin_id)->get("technology_detail as tab2")->result();
+        $data['technologies'] = $this->db->select('tab1.*')->join('technology as tab1','tab1.id= tab2.technology')->where('tab2.faculty_id',$admin_id)->where('tab1.IsDeleted',0)->get("technology_detail as tab2")->result();
 
         //  echo "<pre>";
         // print_r($data['technologies']);
@@ -415,7 +415,7 @@ die;
 
     public function view_question($id = null)
     {
-            $data['questions'] = $this->db->where('test_id',$id)->get('question')->result();
+            $data['questions'] = $this->db->where('test_id',$id)->where('IsActive',1)->get('question')->result();
          // $data['batches'] = ($this->db->query("select b.*,c.title from batch as b left JOIN course as c ON c.id = b.course_id")->result());
         $data['template']='admin/test/detail';
         $this->load->view('admin/layout/template',$data);

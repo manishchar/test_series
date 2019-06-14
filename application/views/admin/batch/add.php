@@ -47,7 +47,7 @@
                                <?php
                               //$getcategory =  getcategory();
                                   //
-                              $technology=$this->admin->getRows('SELECT * FROM technology where status=1 ORDER BY name ASC');
+                              $technology=$this->admin->getRows('SELECT * FROM technology where status=1 and IsDeleted = 0 ORDER BY name ASC');
                                   //print_r($course); exit;
                               if(!empty($technology))
                               {
@@ -90,7 +90,7 @@
                               <?php
                               //$getcategory =  getcategory();
                                   //
-                              $lab=$this->admin->getRows('SELECT * FROM lab');
+                              $lab=$this->admin->getRows('SELECT * FROM lab where IsDeleted = 0');
                                   //print_r($course); exit;
                               if(!empty($lab))
                               {

@@ -14,7 +14,7 @@ class lab extends CI_Controller {
 
     public function index()
     {
-        $data['datalist']=$this->admin->getRows('select * from lab');
+        $data['datalist']=$this->admin->getRows('select * from lab where IsDeleted = 0');
         $data['template']='admin/lab/index';
         $this->load->view('admin/layout/template',$data);
     }

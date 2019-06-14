@@ -16,7 +16,7 @@ class Test extends CI_Controller
             $mapping_id = $_POST['mapping_id'];
             $rollNumber = $_POST['rollNumber'];
             $batch_id = $_POST['batch_id'];
-            $con = " select * from student where ( roll_no = '".$rollNumber."' OR mobile = '".$rollNumber."' ) AND batch_id = '".$batch_id."'";
+            $con = " select * from student where ( roll_no = '".$rollNumber."' OR mobile = '".$rollNumber."' ) AND IsDeleted= 0 AND batch_id = '".$batch_id."'";
             $student = $this->db->query($con)->row_array();
            // $student = $this->db->where(['roll_no'=>$rollNumber,'batch_id'=>$batch_id])->get('student')->row_array();
             //echo $this->db->last_query();
@@ -202,6 +202,9 @@ class Test extends CI_Controller
         $data['total']=$total;
         $data['correct']=$correct;
         $data['incorrect']=$incorrect;
+
+        // print_r($data);
+        // die;
         $this->load->view('test/result',$data);
     }
     public function start()

@@ -96,8 +96,7 @@
                                        //$branch=$this->admin->getVal('SELECT name FROM branch where id='.$datalisti->branch.'');
                                          
                                           $technology=$this->admin->getVal('SELECT name FROM technology where id='.$datalisti->technology.'');
-                          $student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where status = 1 and batch_id='.$datalisti->batch_id.'');
-                          
+                          $student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where IsDeleted = 0 and status = 1 and batch_id='.$datalisti->batch_id.'');
                            $paidamount=$this->admin->getVal('SELECT sum(amount) FROM fees_payment where status = 1 and batch_id ='.$datalisti->batch_id.' and s_id IN ('.$datalisti->sid.')');
                                           // $student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where id='.$datalisti->id.'');
                                    $reaminfees = $student->totalfees - $paidamount;    

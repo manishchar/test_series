@@ -14,7 +14,7 @@ class Batch extends CI_Controller {
 
     public function index()
     {
-        $data['datalist']=$this->admin->getRows('select * from batch');
+        $data['datalist']=$this->admin->getRows('select * from batch where IsDeleted = 0');
         $data['template']='admin/batch/index';
         $this->load->view('admin/layout/template',$data);
     }

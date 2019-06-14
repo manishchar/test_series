@@ -15,7 +15,7 @@ class Faculty extends CI_Controller {
 
     public function index()
     {
-             $data['datalist']=$this->admin->getRows('select *  from admin where types=3');
+             $data['datalist']=$this->admin->getRows('select *  from admin where types=3 and IsDeleted = 0');
         $data['template']='admin/faculty/index';
         $this->load->view('admin/layout/template',$data);
     }

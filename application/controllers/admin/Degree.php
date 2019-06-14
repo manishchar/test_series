@@ -14,7 +14,7 @@ class Degree extends CI_Controller {
 
     public function index()
     {
-        $data['datalist']=$this->admin->getRows('select * from degree');
+        $data['datalist']=$this->admin->getRows('select * from degree where IsDeleted = 0');
         $data['template']='admin/degree/index';
         $this->load->view('admin/layout/template',$data);
     }

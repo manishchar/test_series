@@ -14,7 +14,7 @@ class Student extends CI_Controller {
 
     public function index()
     {
-        $data['datalist']=$this->db->select('s.*,b.startdate,b.starttime')->join('batch as b','b.id=s.batch_id')->get('student as s')->result();
+        $data['datalist']=$this->db->select('s.*,b.startdate,b.starttime')->join('batch as b','b.id=s.batch_id')->where('s.IsDeleted','0')->get('student as s')->result();
         // echo "<pre>";
         // print_r($data['datalist']);
         // die;
@@ -373,27 +373,27 @@ $batch=$this->admin->getRows('SELECT id,fees,startdate,starttime FROM batch ORDE
 
             if($id>0)
             {
-                $emailcheck = $this->admin->getRow("select email from student where email='".$this->input->post('email')."' && id!='".$id."'");
-                $roll_no = $this->admin->getRow("select roll_no from student where roll_no='".$this->input->post('roll_no')."' && id!='".$id."'");
-                if($emailcheck)
-                {
-                    $this->messages->add('Email field must contain a unique value', "alert-danger");
-                    redirect('admin/student/add/'.$id);
-                }
-                elseif($roll_no)
-                {
-                    $this->messages->add('Roll no field must contain a unique value', "alert-danger");
-                    redirect('admin/student/add/'.$id);
-                }
-                else
-                {
+                // $emailcheck = $this->admin->getRow("select email from student where email='".$this->input->post('email')."' && id!='".$id."'");
+                // $roll_no = $this->admin->getRow("select roll_no from student where roll_no='".$this->input->post('roll_no')."' && id!='".$id."'");
+                // if($emailcheck)
+                // {
+                //     $this->messages->add('Email field must contain a unique value', "alert-danger");
+                //     redirect('admin/student/add/'.$id);
+                // }
+                // elseif($roll_no)
+                // {
+                //     $this->messages->add('Roll no field must contain a unique value', "alert-danger");
+                //     redirect('admin/student/add/'.$id);
+                // }
+                // else
+                // {
                     $update = $this->admin->update('student',array('id'=>$id), $array);
                     if($update)
                     {
                         $this->messages->add('Updated successfully', "alert-success");
                         redirect('admin/student');
                     }
-                }
+                //}
             }
             else
             {

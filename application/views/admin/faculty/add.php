@@ -48,7 +48,7 @@
                               <?php
                               //$getcategory =  getcategory();
                                   //
-                              $technology=$this->admin->getRows('SELECT * FROM technology where status=1');
+                              $technology=$this->admin->getRows('SELECT * FROM technology where status=1 and IsDeleted = 0');
                                   //print_r($course); exit;
                               if(!empty($technology))
                               {

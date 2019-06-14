@@ -692,8 +692,8 @@ class Admin extends CI_Model
     function delete($table,$where)
     {
         $this->db->where($where);
-        $this->db->limit('1');
-        $del = $this->db->delete($table);
+       // $this->db->limit('1');
+        $del = $this->db->update($table,array('IsDeleted'=>'1','IsNew'=>'1'));
         if($del){
                 return true;
         }else{

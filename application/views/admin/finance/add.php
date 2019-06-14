@@ -58,7 +58,7 @@
                     </div>
                     <div class="form-group">
                     <label> Password<span style="color:red;">*</span></label>
-                    <input type="password"  class="form-control" name="password" placeholder="Enter  Password" value="<?php if(!empty($selectall)){ echo $this->encryption->decrypt($selectall->password);}elseif($form_data){ echo $form_data['password'];}?>"  required >
+                    <input type="password"  class="form-control" name="password" placeholder="Enter  Password" value="<?php if(!empty($selectall)){ echo $selectall->password;}elseif($form_data){ echo $form_data['password'];}?>"  required >
                     </div>
                     <div class="form-group">
                     <label>Address</label>

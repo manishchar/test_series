@@ -14,7 +14,7 @@ class Branch extends CI_Controller {
 
     public function index()
     {
-        $data['datalist']=$this->admin->getRows('select * from branch');
+        $data['datalist']=$this->admin->getRows('select * from branch where IsDeleted = 0');
         $data['template']='admin/branch/index';
         $this->load->view('admin/layout/template',$data);
     }

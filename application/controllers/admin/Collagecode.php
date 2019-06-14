@@ -14,7 +14,7 @@ class Collagecode extends CI_Controller {
 
     public function index()
     {
-        $data['datalist']=$this->admin->getRows('select * from collagecode');
+        $data['datalist']=$this->admin->getRows('select * from collagecode where IsDeleted = 0');
         $data['template']='admin/collagecode/index';
         $this->load->view('admin/layout/template',$data);
     }

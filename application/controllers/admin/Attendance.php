@@ -40,7 +40,7 @@ class Attendance extends CI_Controller {
         // echo "string";
         // die;
         $admin_id = $this->session->userdata('admin_id');
-        $batch=$this->db->select('tab1.*,tab2.name')->join('technology as tab2','tab1.course_id=tab2.id')->where('tab1.faculty_id',$admin_id)->get('batch as tab1')->result();
+        $batch=$this->db->select('tab1.*,tab2.name')->join('technology as tab2','tab1.course_id=tab2.id')->where('tab1.faculty_id',$admin_id)->where('tab1.IsDeleted',0)->get('batch as tab1')->result();
         // echo "<pre>";
         // print_r($batch);
         // die;
@@ -103,6 +103,7 @@ class Attendance extends CI_Controller {
         $con ="where b.faculty_id = ".$admin_id;
         $con .=" and s.batch_id = ".$id;
         $con .=" and s.status = 1";
+        $con .=" and s.IsDeleted = 0";
         $data['students'] = $this->db->query("select b.*,s.name,s.id as student_id from batch as b INNER JOIN student as s ON b.id = s.batch_id ".$con)->result();
         $batch = $this->db->select("DATEDIFF(enddate, startdate) as diff,batch.*")->where('id',$id)->get('batch')->row();
         $data['studentIds'] = array();
@@ -131,7 +132,7 @@ class Attendance extends CI_Controller {
         $batch = $this->db->select("DATEDIFF(enddate, startdate) as diff,batch.*")->where('id',$bid)->get('batch')->row();
         // print_r($batch);
         // die;
-        $data['students']=$this->db->where(['batch_id'=>$bid,'status'=>'1'])->get('student')->result();
+        $data['students']=$this->db->where(['batch_id'=>$bid,'status'=>'1','IsDeleted'=>'0'])->get('student')->result();
         $data['batch']=$batch;
         $data['batch_id']=$bid;
         $data['template']='admin/attendance/view';

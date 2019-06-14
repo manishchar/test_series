@@ -14,7 +14,7 @@ class Technology extends CI_Controller {
 
     public function index()
     {
-        $data['datalist']=$this->admin->getRows('select * from technology ORDER BY name ASC');
+        $data['datalist']=$this->admin->getRows('select * from technology where IsDeleted = 0 ORDER BY name ASC');
         $data['template']='admin/technology/index';
         $this->load->view('admin/layout/template',$data);
     }
