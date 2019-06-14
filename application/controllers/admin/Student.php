@@ -14,7 +14,10 @@ class Student extends CI_Controller {
 
     public function index()
     {
-        $data['datalist']=$this->admin->getRows('select * from student');
+        $data['datalist']=$this->db->select('s.*,b.startdate,b.starttime')->join('batch as b','b.id=s.batch_id')->get('student as s')->result();
+        // echo "<pre>";
+        // print_r($data['datalist']);
+        // die;
         $data['template']='admin/student/index';
         $this->load->view('admin/layout/template',$data);
     }

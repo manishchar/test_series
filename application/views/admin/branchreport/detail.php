@@ -14,7 +14,11 @@
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="btn-group" id="buttonexport">
-                            <h4>Manage Batch Report Detail</h4>
+                          <?php  
+$technology=$this->admin->getVal('SELECT name FROM technology where id='.$datalist[0]->technology.'');
+$faculty=$this->admin->getVal('SELECT name FROM admin where id='.$detail->faculty_id.'');
+                          ?>
+                            <h4><?=  $technology. ' ( '.date('d-m-Y',strtotime($detail->startdate)).' : '.$detail->starttime.' ) - '.$faculty; ?></h4>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -31,7 +35,7 @@
                                 <tr class="info">
                                 <th width="20px">Student Name</th>  
                                 <th width="20px">Enrolled Number</th>   
-                                <th width="20px">Batch</th>     
+                                <!-- <th width="20px">Batch</th>      -->
                                 <th width="20px">College</th>
                                 <th width="20px">Total Fees</th>
                                 <th width="20px">Paid Fees</th>
@@ -57,7 +61,7 @@
                                            
                                             <td><?php echo ucfirst($datalisti->name); ?></td>
                                              <td><?php echo $datalisti->roll_no; ?></td>
-                                            <td><?php echo ucfirst($technology); ?></td>
+                                            <!-- <td><?php echo ucfirst($technology); ?></td> -->
                                             <td><?php echo ucfirst($college); ?></td>
                                             <td><?php echo $datalisti->totalfees; ; ?></td>
                                             <td><?php echo $paidamount;  ?></td>

@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="" id="msgdiv"><?= msg();?></div>
-                        <div class="">
+                        <div class="table-responsive">
                             <table id="example1" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr class="info">
@@ -35,7 +35,9 @@
                                         <th>Name</th>
                                         <th> Enrollment No.</th>
                                         <th>Technology</th>
-                                        <th>Email</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <!-- <th>Email</th> -->
                                         <th>Mobile</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -56,7 +58,9 @@
                                              <td><?php echo ucfirst($datalisti->roll_no); ?></td>
                                               <td><?php echo ucfirst( $technology); ?></td>
 
-                                             <td><?php echo $datalisti->email; ?></td>
+                                             <td><?php echo date('d-m-Y',strtotime($datalisti->startdate)); ?></td>
+                                             <td><?php echo $datalisti->starttime; ?></td>
+                                             <!-- <td><?php echo $datalisti->email; ?></td> -->
                                             <td><?php echo $datalisti->mobile; ?></td>
                                             <td>
                                             <?php

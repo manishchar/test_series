@@ -77,7 +77,10 @@
                                        
                                
                                 <th width="20px">Technology</th>
-                                <th width="20px">Total Student</th>
+                                <th width="20px">Faculty</th>
+                                <th width="20px">Start_date</th>
+                                <th width="10px">Time</th>
+                                 <th width="10px">Total Student</th>
                                 <th width="20px">Total Fees</th>
                                
                                 <th width="20px">Remaining Amount</th>
@@ -95,7 +98,7 @@
                                           $technology=$this->admin->getVal('SELECT name FROM technology where id='.$datalisti->technology.'');
                           $student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where status = 1 and batch_id='.$datalisti->batch_id.'');
                           
-                           $paidamount=$this->admin->getVal('SELECT sum(amount) FROM fees_payment where status = 1 and batch_id ='.$datalisti->batch_id.'');
+                           $paidamount=$this->admin->getVal('SELECT sum(amount) FROM fees_payment where status = 1 and batch_id ='.$datalisti->batch_id.' and s_id IN ('.$datalisti->sid.')');
                                           // $student=$this->admin->getRow('SELECT count(id) as totalstudent, sum(totalfees) as totalfees FROM student where id='.$datalisti->id.'');
                                    $reaminfees = $student->totalfees - $paidamount;    
                                     ?>
@@ -105,7 +108,10 @@
                                             
                                             
                                             <td><?php echo ucfirst($technology); ?></td>
-                                            <td><?php echo $student->totalstudent; ?></td>
+                                            <td><?php echo ucfirst($datalisti->f_name); ?></td>
+                                            <td><?php echo date('d-m-Y',strtotime($datalisti->startdate)); ?></td>
+                                            <td><?php echo $datalisti->starttime; ?></td>
+                                            <td class="text text-center"><?php echo $student->totalstudent; ?></td>
                                             <td><?php echo $student->totalfees;  ?></td>
                                             <td><?php echo $reaminfees; ?></td>
                                             <td><a href="<?php echo base_url(); ?>admin/batchreport/detail/<?php echo $datalisti->batch_id; ?>">View Detail</a></td>

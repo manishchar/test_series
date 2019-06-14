@@ -430,8 +430,8 @@ function formSubmit(obj){
     background: #eee;
     display: block;
     margin: 0.5em;
-    min-height: 40em;
-    overflow-x: scroll;
+    min-height: 35em;
+    overflow-x: none;
     position: relative;
     width: auto;
 
