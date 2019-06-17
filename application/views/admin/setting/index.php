@@ -29,7 +29,7 @@
                     <div class="col-sm-2">Action</strong></div>    
                     </div>
                         <?php foreach ($tables as $key => $value) { 
-if(in_array('tbl_'.$value,array('tbl_admin','tbl_student','tbl_batch','tbl_branch','tbl_collagecode','tbl_degree','tbl_technology','tbl_technology_detail','tbl_lab'))){ 
+if(in_array('tbl_'.$value,array('tbl_admin','tbl_student','tbl_batch','tbl_branch','tbl_collagecode','tbl_degree','tbl_technology','tbl_technology_detail','tbl_lab','tbl_tbl_student_login'))){ 
     if($value == 'collagecode'){
         $data = array();
         $ress = $this->db->where('IsNew','1')->get($value)->result_array();

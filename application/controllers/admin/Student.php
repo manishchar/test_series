@@ -513,7 +513,20 @@ $batch=$this->admin->getRows('SELECT id,fees,startdate,starttime FROM batch ORDE
     {
         if($id)
         {
-            $delete=$this->admin->delete('student',array('id'=>$id));
+            $res=$this->db->where('id',$id)->get('student')->row();
+            if($res->student_id){
+                $count=$this->db->where(array('IsDeleted'=>'0','student_id'=>$res->student_id))->get('student')->num_rows();
+                if($count > 1){
+                    $delete=$this->admin->delete('student',array('id'=>$id));    
+                }else{
+                    $delete=$this->admin->delete('tbl_student_login',array('student_id'=>$res->student_id));
+                    $delete=$this->admin->delete('student',array('id'=>$id));
+                }
+            }else{
+                $delete=$this->admin->delete('student',array('id'=>$id));    
+            }
+            
+            
             if($delete)
             {
                 $this->messages->add("Deleted Successfully", "alert-success");
