@@ -14,12 +14,104 @@ class Student extends CI_Controller {
 
     public function index()
     {
-        $data['datalist']=$this->db->select('s.*,b.startdate,b.starttime')->join('batch as b','b.id=s.batch_id')->where('s.IsDeleted','0')->get('student as s')->result();
+        $data['datalist']=$this->db->select('s.*,b.startdate,b.starttime')
+        ->join('batch as b','b.id=s.batch_id')
+        //->join('tbl_student_login l','l.student_id=s.student_id','left')
+        ->where('s.IsDeleted','0')->get('student as s')->result();
         // echo "<pre>";
         // print_r($data['datalist']);
         // die;
         $data['template']='admin/student/index';
         $this->load->view('admin/layout/template',$data);
+    }
+
+    public function newList()
+    {
+        $data['datalist']=$this->db->select('l.*,s.technology,s.batch_id,b.startdate,b.starttime')
+        ->join('batch as b','b.id=s.batch_id')
+        ->join('tbl_student_login l','l.student_id=s.student_id','left')
+        ->where('s.IsDeleted','0')->get('student as s')->result();
+        // echo "<pre>";
+        // print_r($data['datalist']);
+        // die;
+        $data['template']='admin/student/index';
+        $this->load->view('admin/layout/template',$data);
+    }
+
+    public function checkStudentNumber(){
+        $sid = $_POST['sid'];
+        $res = $this->db->where('student_id',$sid)->get('tbl_student_login');
+        if($res->num_rows() >0){
+            $detail = $res->row();
+            $branch = $this->db->where('id',$detail->branch)->get('branch')->row();
+            $data['branch'] = $branch;
+            $data['detail'] = $detail;
+            $response = array('status'=>'success','results'=>$data);
+        }else{
+            $response = array('status'=>'failed');
+        }
+        echo json_encode($response);
+    }
+     public function generate()
+    {
+        if($this->input->post()){
+            // echo "<pre>";
+            // print_r($_SERVER);
+            // die;
+
+            $login['name'] = $_POST['name'];
+            $login['college'] = $_POST['college'];
+            $login['degree'] = $_POST['degree'];
+            $login['branch'] = $_POST['branch'];
+            $login['semister'] = $_POST['semister'];
+            $login['roll_no'] = $_POST['roll_no'];
+            $login['email'] = $_POST['email'];
+            $login['mobile'] = $_POST['mobile'];
+
+            
+            $qur = "?".$_SERVER['QUERY_STRING'];
+            if(!isset($_POST['sid'])){
+                
+                $this->session->set_flashdata('error','Please Select Student');
+                redirect(base_url().'admin/student/generate'.$qur);
+            }
+            $sid= $_POST['sid'];
+            $studentNumber= $_POST['studentNumber'];
+            $count = $this->db->where('student_id',$studentNumber)->get('tbl_student_login')->num_rows();
+            if($count ==0){
+                $login['student_id'] = $studentNumber;
+                $login['password'] = '123456';
+                $this->db->insert('tbl_student_login',$login);    
+            }else{
+                $this->db->where('student_id',$studentNumber)->update('tbl_student_login',$login);    
+            } 
+            foreach ($sid as $key => $value) {
+               $this->db->where('id',$value)->update('student',array('student_id'=>$studentNumber)); 
+            }
+            $this->session->set_flashdata('message','Student Number Generate');
+            redirect(base_url().'admin/student/generate'.$qur);
+        }else{
+        if(isset($_GET['mobile'])){
+            $mobile = $_GET['mobile'];
+            
+            $data['datalist']=$this->db->select('s.*,b.startdate,b.starttime')->join('batch as b','b.id=s.batch_id')->where('s.IsDeleted = 0 and s.student_id IS NULL')->where('s.mobile',$mobile)->get('student as s')->result();
+            $res = $this->db->select('MAX(id) as maxId')->get('tbl_student_login')->row('maxId');
+            if($res == ''){
+                $student_no ='1';
+            }else{
+                $student_no =($res+1);
+            }
+        }else{
+            $data['datalist'] = array();  
+            $student_no ='';
+        }
+            $data['student_no']='cybrom'.$student_no;
+            $data['collages']=$this->db->where(['IsDeleted'=>'0','status'=>'1'])->get('collagecode')->result();
+            $data['branchs']=$this->db->where(['IsDeleted'=>'0','status'=>'1'])->get('branch')->result();
+            $data['degrees']=$this->db->where(['IsDeleted'=>'0','status'=>'1'])->get('degree')->result();
+            $data['template']='admin/student/generate';
+            $this->load->view('admin/layout/template',$data);
+        }
     }
 
     public function view($id)
@@ -35,6 +127,10 @@ class Student extends CI_Controller {
         if($id)
         {
             $res=$this->admin->getRow('select * from student where id='.$id.'');
+            $login=$this->db->where('student_id',$res->student_id)->get('tbl_student_login')->row();
+            // print_r($res);
+            // die;
+            $data['login'] = $login;
             $data['selectall'] = $res;
             $data['batches']=$this->admin->getRows('select * from batch');
             //print_r($data['batches']);die;
@@ -279,19 +375,18 @@ $batch=$this->admin->getRows('SELECT id,fees,startdate,starttime FROM batch ORDE
          $this->form_validation->set_rules('totalfees', 'totalfees', 'trim|required');
         if($id>0)
         { 
-		$this->form_validation->set_rules('roll_no', 'Roll no', 'trim|required|min_length[10]|max_length[12]');
-            $this->form_validation->set_rules('email', 'Email', 'trim|required');
-          //  $this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|numeric|min_length[10]|max_length[12]');
+		  $this->form_validation->set_rules('roll_no', 'Roll no', 'trim|required|min_length[10]|max_length[12]');
+          $this->form_validation->set_rules('email', 'Email', 'trim|required');
+          $this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|numeric|min_length[10]|max_length[12]');
         }
         else
-        { $this->form_validation->set_rules('roll_no', 'Roll no', 'trim|required|min_length[10]|max_length[12]');
+        { 
+            $this->form_validation->set_rules('roll_no', 'Roll no', 'trim|required|min_length[10]|max_length[12]');
             $this->form_validation->set_rules('email', 'Email', 'trim|required');
-             //$this->form_validation->set_rules('email', 'Email', 'trim|required|is_unique[admin.email]');
-            //$this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|numeric|min_length[10]|max_length[12]');
+            $this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|numeric|min_length[10]|max_length[12]');
         }
        
-        $this->form_validation->set_rules('alt_mobile', 'Alt mobile', 'trim');
-  
+        $this->form_validation->set_rules('alt_mobile', 'Alt mobile', 'trim');  
         $this->session->set_flashdata('postdata',$_POST);
         if ($this->form_validation->run() == FALSE)
         {
@@ -349,23 +444,30 @@ $batch=$this->admin->getRows('SELECT id,fees,startdate,starttime FROM batch ORDE
                 }
             }
             $feesdate = date('Y-m-d',strtotime($this->input->post('feesdate')));
+            $student_id = $this->input->post('student_id');
+
+            $login['name'] = $_POST['name'];
+            $login['college'] = $_POST['college'];
+            $login['degree'] = $_POST['degree'];
+            $login['branch'] = $_POST['branch'];
+            //$login['semister'] = $_POST['semister'];
+            $login['roll_no'] = $_POST['roll_no'];
+            $login['email'] = $_POST['email'];
+            $login['mobile'] = $_POST['mobile'];
+            $login['IsNew'] = 1;
+            //$login['password'] = '123456';
+            //$login['student_id'] = $student_no;
+            $this->db->where('student_id',$student_id)->update('tbl_student_login',$login);
+            //$studentNumber = $this->db->insert_id();
+
             $array = array(
                     'technology'           =>$this->input->post('technology') ,
                     'batch_id'             =>$this->input->post('batch_id') ,
-                    'name'                 =>$this->input->post('name') ,
-                    'email'                =>$this->input->post('email')  ,
-                    'mobile'               =>$this->input->post('mobile') ,
-                    'roll_no'              =>$this->input->post('roll_no') ,
-                    'college'              =>$this->input->post('college') ,
-                    'degree'               =>$this->input->post('degree') ,
-                    'branch'               =>$this->input->post('branch') ,
                     'semister'             =>$this->input->post('semister') ,
-                    'roll_no'              =>$this->input->post('roll_no') ,
                     'totalfees'            =>$this->input->post('totalfees') ,
                     'status'               =>$this->input->post('status'),
-		'IsNew'               =>1,
-                    
-                 );
+		            'IsNew'               =>1,
+            );
             if(!empty($image))
             {
                 $array['image']=$image;

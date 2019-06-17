@@ -18,6 +18,22 @@
             border-bottom-style: ridge;
             margin-top: 10px;
         }
+        #header{
+            font-size: 30px;
+            font-weight: bold;
+            background: #5e8b9c;
+            color: #fff;
+        }
+        #time{
+        font-size: 30px;
+        font-weight: bold;
+        padding: 20px;
+        }
+        @media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
 	</style>
 </head>
 <body>
@@ -28,90 +44,97 @@
             <!-- <a href="<?= base_url().'test/logout' ?>" class="btn btn-danger">Logout</a> -->
         </div>
 
-         <div class="col-sm-12" style="">
-         <div class="col-sm-8">
-         <span> Time</span>
-         <span id="time">01:00:00</span>
-         </div>
-         <div class="col-sm-4">&nbsp;</div>
-        
-        </div>
 
 
-        <div class="col-sm-8">
-            <div id="header">
-            	<div class="leftSection"></div>
-            	<div class="rightSection"><span id="stepValue">1</span> of <span><?= count($questions); ?></span></div>
+         <div id="time">
+             <div class="row">
+                 <div class="col-md-8 col-xs-12">
+                 <span> Time</span>
+                 <span id="time">01:00:00</span>
+                 </div>
+                 <div class="col-md-4">&nbsp;</div>
             </div>
-            <form id="myform" onsubmit="return false;">
-                <input type="hidden" name="test_id" value="<?= $test_id ?>">
-                <input type="hidden" name="student_id" value="<?= $student_id ?>">
-                <input type="hidden" name="mapping_id" value="<?= $mapping_id ?>">
-                <input type="hidden" name="test_attempt_id" value="<?= $test_attempt_id ?>">
-            	<div id="example-basic">
-
-            		<?php 
-                    $htm = '';
-            		foreach($questions as $key=>$question){ 
-                        if($key == 0){
-$htm .= "<div class='col-sm-1 form-group questionNumber active' id = '".($key)."'>".($key+1)."</div>";
-                        }else{
-$htm .= "<div class='col-sm-1 form-group questionNumber' id = '".($key)."'>".($key+1)."</div>";                            
-                        }
-                        
-                    ?>
-            		<h3 class="title" style="display: none;">Keyboard</h3>
-            		<section style="overflow-x: scroll !important;">
-                        
-            		<p><?= ($key+1).' ) '.$question->question ?></p>
-                    <input type="hidden" name="type[]" value="<?= $question->type ?>">
-                    <?php
-                        if($question->type == '1'){
-                           $response = json_decode($question->response);
-                           foreach ($response as $k => $res) { ?>
-                                <div class="row qsList">
-                                    <div class="col-sm-1">
-                                    <input type="radio" id="<?= $question->id.'_'.$k ?>" name="answare[<?= $question->id; ?>]" value="<?= ($k+1); ?>">
-                                    </div>
-                                    <div class="col-sm-11">
-                                        <label for="<?= $question->id.'_'.$k ?>"><?= $res; ?></label>
-                                    </div>
-                                </div> 
-                           <?php }
-                        }
-
-                        if($question->type == '2'){
-                           $response = json_decode($question->response);
-                           foreach ($response as $k => $res) { ?>
-                                <div>
-                                    <input type="checkbox" id="<?= $question->id.'_'.$k ?>" name="answare[<?= $question->id; ?>][]" value="<?= ($k+1); ?>">
-                                    <label for="<?= $question->id.'_'.$k ?>"><?= $res; ?></label>
-                                </div> 
-                           <?php }
-                        }
-                    ?>
-            		<!-- 
-            		<div>
-            			<input type="radio" name="asn">
-            			<label>Response</label>
-            		</div> -->
-                    
-            		</section>
-            		<?php }
-            		?>
-
-            		<!-- <h3>Effects</h3>
-            		<section>
-            		<p>Wonderful transition effects.</p>
-            		</section>
-            		<h3>Pager</h3>
-            		<section>
-            		<p>The next and previous buttons help you to navigate through your content.</p>
-            		</section> -->
-            	</div>
-            </form>
         </div>
-		<div class="col-sm-4">
+
+        <div class="row">
+            <div class="col-md-8 questionScreen">
+                <div id="header">
+                	<div class="leftSection"></div>
+                	<div class="rightSection"><span id="stepValue">1</span> of <span><?= count($questions); ?></span></div>
+                </div>
+                <form id="myform" onsubmit="return false;">
+                    <input type="hidden" name="test_id" value="<?= $test_id ?>">
+                    <input type="hidden" name="student_id" value="<?= $student_id ?>">
+                    <input type="hidden" name="mapping_id" value="<?= $mapping_id ?>">
+                    <input type="hidden" name="test_attempt_id" value="<?= $test_attempt_id ?>">
+                	<div id="example-basic">
+
+                		<?php 
+                        $htm = '';
+                		foreach($questions as $key=>$question){ 
+                            if($key == 0){
+                            $htm .= "<div class='col-sm-1 form-group questionNumber active' id = '".($key)."'>".($key+1)."</div>";
+                                                    }else{
+                            $htm .= "<div class='col-sm-1 form-group questionNumber' id = '".($key)."'>".($key+1)."</div>";                            
+                            }
+                        ?>
+                		<h3 class="title" style="display: none;">Keyboard</h3>
+                		<section style="overflow-x: scroll !important;">
+                            
+                		<p><?= ($key+1).' ) '.$question->question ?></p>
+                        <input type="hidden" name="type[]" value="<?= $question->type ?>">
+                        <?php
+                            if($question->type == '1'){
+                               $response = json_decode($question->response);
+                               foreach ($response as $k => $res) { ?>
+                                    <div class="row qsList">
+                                        <div class="col-sm-1">
+                                        <input type="radio" id="<?= $question->id.'_'.$k ?>" name="answare[<?= $question->id; ?>]" value="<?= ($k+1); ?>">
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <label for="<?= $question->id.'_'.$k ?>"><?= $res; ?></label>
+                                        </div>
+                                    </div> 
+                               <?php }
+                            }
+
+                            if($question->type == '2'){
+                               $response = json_decode($question->response);
+                               foreach ($response as $k => $res) { ?>
+                                    <div class="row qsList">
+                                        <div class="col-sm-1">
+                                        <input type="checkbox" id="<?= $question->id.'_'.$k ?>" name="answare[<?= $question->id; ?>][]" value="<?= ($k+1); ?>">
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <label for="<?= $question->id.'_'.$k ?>"><?= $res; ?></label>
+                                        </div>
+                                    </div>  
+                               <?php }
+                            }
+                        ?>
+                		<!-- 
+                		<div>
+                			<input type="radio" name="asn">
+                			<label>Response</label>
+                		</div> -->
+                        
+                		</section>
+                		<?php }
+                		?>
+
+                		<!-- <h3>Effects</h3>
+                		<section>
+                		<p>Wonderful transition effects.</p>
+                		</section>
+                		<h3>Pager</h3>
+                		<section>
+                		<p>The next and previous buttons help you to navigate through your content.</p>
+                		</section> -->
+                	</div>
+                </form>
+            </div>
+    		<div class="col-md-4 col-xs-12">
+        </div>
             <!-- <div class="container-fluid">
                 <div class="row">
                 <?= $htm; ?>      
@@ -430,7 +453,8 @@ function formSubmit(obj){
     background: #eee;
     display: block;
     margin: 0.5em;
-    min-height: 35em;
+    min-height: 50em;
+    padding-right: 10px;
     overflow-x: none;
     position: relative;
     width: auto;

@@ -54,14 +54,14 @@ input[type=number]::-webkit-outer-spin-button {
                               <?php
                               //$getcategory =  getcategory();
                               //
-                              $student=$this->admin->getRows('SELECT * FROM student where status=1');
+                              $student=$this->admin->getRows('SELECT s.*,b.startdate,b.starttime,b.enddate,b.endtime FROM student as s JOIN batch as b ON b.id=s.batch_id where s.status=1');
                                   //print_r($course); exit;
                               if(!empty($student))
                               {
                                   foreach ($student as $studenti)
                                   {
                                       ?>
-                                      <option  value="<?php  echo $studenti->id;?>"><?php echo $studenti->roll_no.' '.ucfirst($studenti->name); ?></option>
+                                      <option  value="<?php  echo $studenti->id;?>"><?php echo ucfirst($studenti->name).' ('.$studenti->starttime.' - '.$studenti->endtime.' ) '; ?></option>
                                       <?php
                                   }
                               }

@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="" id="msgdiv"><?= msg();?></div>
-                        <div class="">
+                        <div class="table-responsive">
                             <table id="example1" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr class="info">

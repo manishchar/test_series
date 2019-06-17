@@ -134,7 +134,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <!-- <li><a class="" href="<?php echo base_url(); ?>admin/student/add">Add Student</a></li> -->
+                    <li><a class="" href="<?php echo base_url(); ?>admin/student/generate">Generate</a></li>
+                    <li><a class="" href="<?php echo base_url(); ?>admin/student/newList">List New Student</a></li>
                     <li><a href="<?php echo base_url(); ?>admin/student">List Student</a></li>
                     <li><a href="<?php echo base_url(); ?>admin/student/repayment">Fees Repayment</a></li>
                 </ul>

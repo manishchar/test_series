@@ -84,7 +84,7 @@ class Test extends CI_Controller
         // $ans['mapping_id']=$mapping_id;
          
         foreach ($answares as $key => $value) {
-            $question = $this->db->where('id',$key)->get('question')->row();
+            $question = $this->db->where('id',$key)->where('IsActive',1)->get('question')->row();
             $con['question_id']=$key;
             //echo "type ".$type[$key];
             $ans['IsCorrect']=0;
@@ -184,7 +184,7 @@ class Test extends CI_Controller
             $aid = $session['aid'];
             $test_id = $session['test_id'];
         }
-        $total_question = $this->db->where('test_id',$test_id)->get('question')->num_rows();
+        $total_question = $this->db->where('test_id',$test_id)->where('IsActive',1)->get('question')->num_rows();
         $results = $this->db->where('test_attempt_id',$aid)->get('test_answares')->result_array();
 
      //   echo "<pre>";
@@ -220,7 +220,7 @@ class Test extends CI_Controller
         $data['student_id']=$test_attempt->student_id;
         $data['test_attempt_id']=$test_attempt->id;
         $data['test_id']=$test_id;
-        $data['questions'] = $this->db->where('test_id',$test_id)->get('question')->result();
+        $data['questions'] = $this->db->where('test_id',$test_id)->where('IsActive',1)->get('question')->result();
         // echo $aid;
         // die;
         $data['template']=array();

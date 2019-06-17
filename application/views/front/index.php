@@ -12,7 +12,7 @@
     </div>
   </section>
   <section class="" >
-    <div class="streak streak-photo registration-form" style="background-image:url(<?php echo base_url(); ?>assets/front/img/Icons_0007_bg5.png);">
+    <div class="streak streak-photo registration-form" style="height:1000px;background-image:url(<?php echo base_url(); ?>assets/front/img/Icons_0007_bg5.png);">
       <div class="flex-center rgba-black-light py-5">
         <div class="container">
           <div class="row">
@@ -36,6 +36,22 @@
              <form class="white rounded px-3 py-4" method="post" onsubmit="return formSubmit(this)" action="<?php echo base_url(); ?>home/add_student" enctype="multipart/form-data">
                    <?= msg();?>
               <h4 class="h4-responsive text-uppercase text-center font-weight-600 mb-4">Student <span class="blue-text-theme">Detail</span></h4>
+              <div class="row text-center">
+              
+                <div class="form-check form-check-inline">
+                  <input type="radio" class="form-check-input type" name="type" value="1" id="new" checked="">
+                  <label for="new">New</label>
+                </div>
+                <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input type" name="type" value="2" id="old">
+                <label for="old">Existing</label>
+                </div>
+              
+
+              </div>
+              <div class="row form-group" id="studentNumberSection">
+                <input type="text" name="studentNumber" id="studentNumber" class="form-control studentNumber" placeholder="Student Id">
+              </div>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -74,14 +90,14 @@
                       <div class="form-group">
                        <label class="font-weight-700 font-13">Name<span style="color:red;">*</span></label>
                         <input type="hidden" name="id" value="<?php if(!empty($selectall)){ echo $selectall->id;}?>" >
-                        <input type="text" autocomplete="off"   class="form-control myform"  name="name" id="name" placeholder="Enter  Name"  value="<?php if(!empty($selectall)){ echo $selectall->name;}elseif($form_data){ echo $form_data['name'];}?>">
+                        <input type="text" autocomplete="off"   class="form-control myform existUser"  name="name" id="name" placeholder="Enter  Name"  value="<?php if(!empty($selectall)){ echo $selectall->name;}elseif($form_data){ echo $form_data['name'];}?>">
                       </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                        
                          <label class="font-weight-700 font-13">College<span style="color:red;">*</span></label>
-                        <select class="browser-default form-control myform " name="college" id="college"s>
+                        <select class="browser-default form-control myform existUser" name="college" id="college"s>
                               <option value="">Select College</option>
                               <?php
                               //$getcategory =  getcategory();

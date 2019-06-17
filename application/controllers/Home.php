@@ -274,25 +274,49 @@ class Home extends CI_Controller
                 }
             }
             $topic = $this->input->post('topic')?$this->input->post('topic'):array();
+            $studentNumber = $this->input->post('studentNumber');
+            if($studentNumber == ''){
+                $res = $this->db->select('MAX(id) as maxId')->get('tbl_student_login')->row('maxId');
+                if($res == ''){
+                $student_no ='1';
+                }else{
+                $student_no =($res+1);
+                }
+
+                    $login['name'] = $_POST['name'];
+                    $login['college'] = $_POST['college'];
+                    $login['degree'] = $_POST['degree'];
+                    $login['branch'] = $_POST['branch'];
+                    //$login['semister'] = $_POST['semister'];
+                    $login['roll_no'] = $_POST['roll_no'];
+                    $login['email'] = $_POST['email'];
+                    $login['mobile'] = $_POST['mobile'];
+                    $login['password'] = '123456';
+                    $login['student_id'] = 'cybrom'.$student_no;
+                    $this->db->insert('tbl_student_login',$login);
+                    $studentNumber = 'cybrom'.$student_no;
+
+                
+            }
             $feesdate = date('Y-m-d',strtotime($this->input->post('feesdate')));
             $array = array(
-                     'topic'           =>implode(',', $topic) ,
-                     'technology'           =>$this->input->post('technology') ,
-                    'batch_id'             =>$this->input->post('batch_id') ,
-                    'name'                 =>$this->input->post('name') ,
-                    'email'                 =>$this->input->post('email')  ,
-                    'mobile'                =>$this->input->post('mobile') ,
-                    'roll_no'               =>$this->input->post('roll_no') ,
-                    'college'               =>$this->input->post('college') ,
-                    'degree'               =>$this->input->post('degree') ,
-                    'branch'               =>$this->input->post('branch')?$this->input->post('branch'):'',
-                    'semister'               =>$this->input->post('semister') ,
-                    'totalfees'             =>$this->input->post('totalfees') ,
-                    // 'fees'                  =>$this->input->post('fees') ,
-                    // 'payment_mode'             =>$this->input->post('payment_mode'),
-                    'testseries'             =>$this->input->post('testseries'),
-                     
-                 );
+                'student_id'           =>$studentNumber,
+                'topic'                =>implode(',', $topic) ,
+                'technology'           =>$this->input->post('technology') ,
+                'batch_id'              =>$this->input->post('batch_id') ,
+                'name'                  =>$this->input->post('name') ,
+                'email'                 =>$this->input->post('email')  ,
+                'mobile'                =>$this->input->post('mobile') ,
+                'roll_no'               =>$this->input->post('roll_no') ,
+                'college'               =>$this->input->post('college') ,
+                'degree'                =>$this->input->post('degree') ,
+                'branch'                =>$this->input->post('branch')?$this->input->post('branch'):'',
+                'semister'              =>$this->input->post('semister') ,
+                'totalfees'             =>$this->input->post('totalfees') ,
+                // 'fees'                  =>$this->input->post('fees') ,
+                // 'payment_mode'             =>$this->input->post('payment_mode'),
+                'testseries'             =>$this->input->post('testseries'),
+            );
             if(!empty($image))
             {
                 $array['image']=$image;

@@ -33,6 +33,7 @@
                                     <tr class="info">
                                         <th style="display:none;">id</th>
                                         <th>Name</th>
+                                        <th> Student Id</th>
                                         <th> Enrollment No.</th>
                                         <th>Technology</th>
                                         <th>Date</th>
@@ -55,6 +56,7 @@
                                         <tr data-row-id="<?php echo $datalisti->id; ?>">
                                             <td style="display:none;"><?php echo $datalisti->id; ?></td>
                                             <td><?php echo ucfirst($datalisti->name); ?></td>
+                                            <td><?php if($datalisti->student_id){ echo strtoupper('cybrom'.$datalisti->student_id); } ?></td>
                                              <td><?php echo ucfirst($datalisti->roll_no); ?></td>
                                               <td><?php echo ucfirst( $technology); ?></td>
 
@@ -89,10 +91,11 @@
 
                                                 if(has_permission(9,'edit')==true)
                                                 {
+                                                    if($datalisti->student_id!=null){
                                                 ?>
                                                 <a href="<?php echo base_url(); ?>admin/student/add/<?php echo $datalisti->id; ?>"><button type="button" class="btn btn-add btn-sm" title="Edit"><i class="fa fa-pencil"></i></button></a>
                                                 <?php
-                                                }
+                                                } }
 
                                                 if(has_permission(9,'delete')==true)
                                                 {

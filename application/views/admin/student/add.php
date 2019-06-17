@@ -46,7 +46,8 @@
                    <div class="col-sm-6">
      <div class="form-group">
                         <label>Technology<span style="color:red;">*</span></label>
-                           <input type="hidden" name="id" value="<?php if(!empty($selectall)){ echo $selectall->id;}?>" >
+                           <input type="text" name="id" value="<?php if(!empty($selectall)){ echo $selectall->id;}?>" >
+                           <input type="text" name="student_id" value="<?php if(!empty($selectall)){ echo $selectall->student_id;}?>" >
                         <select class="form-control chosen-select" name="technology" id="technology">
                               <option value="">Select Technology</option>
                               <?php
@@ -89,7 +90,7 @@
                   <div class="form-group">
                         <label>Name<span style="color:red;">*</span></label>
                         <input type="hidden" name="id" value="<?php if(!empty($selectall)){ echo $selectall->id;}?>" >
-                        <input type="text"  class="form-control"  name="name" placeholder="Enter  Name"  value="<?php if(!empty($selectall)){ echo $selectall->name;}elseif($form_data){ echo $form_data['name'];}?>"  required>
+                        <input type="text"  class="form-control"  name="name" placeholder="Enter  Name"  value="<?php if(!empty($login)){ echo $login->name;}elseif($form_data){ echo $form_data['name'];}?>"  required>
                     </div>
                      </div>
                     <div class="col-sm-6">
@@ -107,7 +108,7 @@
                                   foreach ($collagecode as $collagecodei)
                                   {
                                       ?>
-                                      <option <?php if(!empty($selectall)){if($selectall->college==$collagecodei->id){echo "selected";}}elseif(!empty($form_data)){if($form_data['college']==$collagecodei->id){echo "selected";}} ?> value="<?php  echo $collagecodei->id;?>"><?php echo $collagecodei->code.' '.ucfirst($collagecodei->name); ?></option>
+                                      <option <?php if(!empty($login)){if($login->college==$collagecodei->id){echo "selected";}}elseif(!empty($form_data)){if($form_data['college']==$collagecodei->id){echo "selected";}} ?> value="<?php  echo $collagecodei->id;?>"><?php echo $collagecodei->code.' '.ucfirst($collagecodei->name); ?></option>
                                       <?php
                                   }
                               }
@@ -133,7 +134,7 @@
                                   foreach ($degree as $degreei)
                                   {
                                       ?>
-                                      <option <?php if(!empty($selectall)){if($selectall->degree==$degreei->id){echo "selected";}}elseif(!empty($form_data)){if($form_data['degree']==$degreei->id){echo "selected";}} ?> value="<?php  echo $degreei->id;?>"><?php echo ucfirst($degreei->name); ?></option>
+                                      <option <?php if(!empty($login)){if($login->degree==$degreei->id){echo "selected";}}elseif(!empty($form_data)){if($form_data['degree']==$degreei->id){echo "selected";}} ?> value="<?php  echo $degreei->id;?>"><?php echo ucfirst($degreei->name); ?></option>
                                       <?php
                                   }
                               }
@@ -158,14 +159,14 @@
                         <label>Semester<span style="color:red;">*</span></label>
                         <select class="form-control" name="semister" >
                              <option value="">Select Semester</option>
-                            <option <?php if($form_data['semister']){if($form_data['semister']==1){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==1){ echo " selected";}  }  ?> value="1">1 st Semester</option>
-                            <option  <?php if($form_data['semister']){if($form_data['semister']==2){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==2){ echo " selected";}  }  ?> value="2">2 nd Semester</option>
-                             <option <?php if($form_data['semister']){if($form_data['semister']==3){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==3){ echo " selected";}  }  ?> value="3">3 th Semester</option>
-                            <option  <?php if($form_data['semister']){if($form_data['semister']==4){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==4){ echo " selected";}  }  ?> value="4">4 th Semester</option>
-                             <option <?php if($form_data['semister']){if($form_data['semister']==5){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==5){ echo " selected";}  }  ?> value="5">5 th Semester</option>
-                            <option  <?php if($form_data['semister']){if($form_data['semister']==6){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==6){ echo " selected";}  }  ?> value="6">6 th Semester</option>
-                             <option <?php if($form_data['semister']){if($form_data['semister']==7){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==7){ echo " selected";}  }  ?> value="7">7 th Semester</option>
-                            <option  <?php if($form_data['semister']){if($form_data['semister']==8){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==8){ echo " selected";}  }  ?> value="8">8 th Semester</option>
+                            <option <?php if($form_data['semister']){if($form_data['semister']==1){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==1){ echo " selected";}  }  ?> value="1">1 Semester</option>
+                            <option  <?php if($form_data['semister']){if($form_data['semister']==2){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==2){ echo " selected";}  }  ?> value="2">2 Semester</option>
+                             <option <?php if($form_data['semister']){if($form_data['semister']==3){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==3){ echo " selected";}  }  ?> value="3">3 Semester</option>
+                            <option  <?php if($form_data['semister']){if($form_data['semister']==4){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==4){ echo " selected";}  }  ?> value="4">4 Semester</option>
+                             <option <?php if($form_data['semister']){if($form_data['semister']==5){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==5){ echo " selected";}  }  ?> value="5">5 Semester</option>
+                            <option  <?php if($form_data['semister']){if($form_data['semister']==6){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==6){ echo " selected";}  }  ?> value="6">6 Semester</option>
+                             <option <?php if($form_data['semister']){if($form_data['semister']==7){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==7){ echo " selected";}  }  ?> value="7">7 Semester</option>
+                            <option  <?php if($form_data['semister']){if($form_data['semister']==8){echo "selected";}}elseif(!empty($selectall)){ if($selectall->semister==8){ echo " selected";}  }  ?> value="8">8 Semester</option>
                         </select>
                     </div>
 
@@ -262,109 +263,69 @@ jQuery(document).ready(function(){
 <script type="text/javascript">
   $(document).ready(function(){
     //jquery script
-    <?php if($selectall->degree != ''){?>
-    
-     var id = <?php  if($selectall->technology != ''){ echo $selectall->technology; }?>;
-      var batch_id = <?php if($selectall->batch_id != ''){ echo $selectall->batch_id;} ?>;
+<?php if($selectall->technology != ''){?>
+  var id = <?php  if($selectall->technology != ''){ echo $selectall->technology; }?>;
+  var batch_id = <?php if($selectall->batch_id != ''){ echo $selectall->batch_id;} ?>;
+  $.ajax({
+      type: "POST",
+      url: "<?php echo base_url(); ?>admin/student/getcourse/"+id+"/"+batch_id,
+      cache:false,
+      data: {id:id,batch_id:batch_id},
+      success: function(response)
+      {
 
-    
-      
-      $.ajax({
-                    type: "POST",
-                    url: "<?php echo base_url(); ?>admin/student/getcourse/"+id+"/"+batch_id,
-                    cache:false,
-                    data: {id:id,batch_id:batch_id},
-                    success: function(response)
-                    {
-
-                      $("#batch_id").html(response);
-                      
-                }
+        $("#batch_id").html(response);
+        
+      }
   });
-
- 
-
-<?php } ?>
-    <?php if($selectall->degree != ''){?>
-
-// echo $selectall->alt_mobile;
-
- var degree = <?php if($selectall->degree != ''){  echo $selectall->degree;} ?>;
- var branch = <?php if($selectall->branch != ''){  echo $selectall->branch;} ?>;
-
-
-      $.ajax({
-                    type: "POST",
-                    url: "<?php echo base_url(); ?>admin/student/getbranch/"+degree+"/"+branch,
-                    cache:false,
-                    data: {id:degree,branch:branch},
-                    success: function(response)
-                    {
-                   
-                      $("#branch").html(response);
-                      
-                }
-  });
-
 <?php } ?>
 
-  $("#technology").change(function(){
+<?php if($login->degree != ''){?>
+  var degree = <?php if($login->degree != ''){  echo $login->degree;} ?>;
+  var branch = <?php if($login->branch != ''){  echo $login->branch;} ?>;
+  $.ajax({
+      type: "POST",
+      url: "<?php echo base_url(); ?>admin/student/getbranch/"+degree+"/"+branch,
+      cache:false,
+      data: {id:degree,branch:branch},
+      success: function(response)
+      { 
+        $("#branch").html(response); 
+      }
+  });
+<?php } ?>
 
-     
-
-
-// echo $selectall->alt_mobile;
-
-
+$("#technology").change(function(){
     var id = $(this).val();
     var batch_id = '0';
+    $.ajax({
+        type: "POST",
+        url: "<?php echo base_url(); ?>admin/student/getcourse/"+id+"/"+batch_id,
+        cache:false,
+        data: {id:id,batch_id:batch_id},
+        success: function(response)
+        {
+          $("#batch_id").html(response);
+        }
+    });
 
-    
-    //   alert(id);
-      $.ajax({
-                    type: "POST",
-                    url: "<?php echo base_url(); ?>admin/student/getcourse/"+id+"/"+batch_id,
-                    cache:false,
-                    data: {id:id,batch_id:batch_id},
-                    success: function(response)
-                    {
+});
 
-                     // alert(response);
-                      $("#batch_id").html(response);
-                      
-                }
+
+$("#degree").change(function(){
+  var id = $(this).val();
+  var branch = '0';
+  $.ajax({
+        type: "POST",
+        url: "<?php echo base_url(); ?>admin/student/getbranch/"+id+"/"+branch,
+        cache:false,
+        data: {id:id,branch:branch},
+        success: function(response)
+        {
+          $("#branch").html(response);    
+        }
   });
-
-     });
-
-
-    $("#degree").change(function(){
-
-     
-
-           
-
-// echo $selectall->alt_mobile;
-
-
-    var id = $(this).val();
-    var branch = '0';
-
-    //   alert(id);
-      $.ajax({
-                    type: "POST",
-                    url: "<?php echo base_url(); ?>admin/student/getbranch/"+id+"/"+branch,
-                    cache:false,
-                    data: {id:id,branch:branch},
-                    success: function(response)
-                    {
-
-                      $("#branch").html(response);
-                      
-                }
-  });
-
-     });
+});
 
 
  
